@@ -1,0 +1,17 @@
+{
+  "responseCode": "200",
+  "responseMsg": "OK",
+  "data": [
+    {
+      "divisionid": 1,
+      "divisioncode": "divisioncode 1",
+      "divisionname": "divisionname 3"
+    },
+    {
+      "divisionid": 2,
+      "divisioncode": "divisioncode 2",
+      "divisionname": "divisionname 2"
+    }
+  ],
+  "timestamp": "2025-04-08T12:28:48.850Z"
+}

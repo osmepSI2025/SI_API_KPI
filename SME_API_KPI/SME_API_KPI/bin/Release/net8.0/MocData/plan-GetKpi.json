@@ -1,0 +1,28 @@
+{
+  "responseCode": "200",
+  "responseMsg": "OK",
+  "data": [
+    {
+      "planid": 1,
+      "kpiid": 2,
+      "kpilist": [
+        {
+          "index": 1,
+          "kpiid": 2,
+          "kpiname": "ข้อมูลที่ใช้อธิบายการวัดผล",
+          "weight": 90.5,
+          "target": "ข้อมูลค่าเป้าหมาย ",
+          "divisionname": [
+            {           
+              "divisionname": "การวางแผนและพัฒนาระบบ A"        
+            },
+            {           
+              "divisionname": "การวางแผนและพัฒนาระบบ B"            
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "timestamp": "2025-04-08T12:28:48.850Z"
+}

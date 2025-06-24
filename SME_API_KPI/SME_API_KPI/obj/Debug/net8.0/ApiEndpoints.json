@@ -1,0 +1,337 @@
+[
+  {
+    "ContainingType": "SME_API_KPI.Controllers.DimensionSystemController",
+    "Method": "GetAllMgetdimenson",
+    "RelativePath": "api/SYS-KPI/DimensionSystem/getdimenson",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.DimensionSystemController",
+    "Method": "batchgetdimenson",
+    "RelativePath": "api/SYS-KPI/DimensionSystem/getdimenson-batch",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.DivisionSystemController",
+    "Method": "GetAllgetdivision",
+    "RelativePath": "api/SYS-KPI/divisionSystem/getdivision",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.DivisionSystemController",
+    "Method": "batchgetdivision",
+    "RelativePath": "api/SYS-KPI/divisionSystem/getdivision-batch",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.MasterController",
+    "Method": "GetAllGetkpiType",
+    "RelativePath": "api/SYS-KPI/Master/GetkpiType",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.MasterController",
+    "Method": "batchGetkpiType",
+    "RelativePath": "api/SYS-KPI/Master/GetkpiType-batch",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.MasterController",
+    "Method": "GetAllGetmeasure",
+    "RelativePath": "api/SYS-KPI/Master/Getmeasure",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.MasterController",
+    "Method": "batchGetmeasure",
+    "RelativePath": "api/SYS-KPI/Master/Getmeasure-batch",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.MasterController",
+    "Method": "GetAllMStatus",
+    "RelativePath": "api/SYS-KPI/Master/GetStatus",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.MasterController",
+    "Method": "GetAllYear",
+    "RelativePath": "api/SYS-KPI/Master/GetYear",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.MasterController",
+    "Method": "batchYear",
+    "RelativePath": "api/SYS-KPI/Master/GetYear-batch",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.MasterController",
+    "Method": "GetAllinputFormate",
+    "RelativePath": "api/SYS-KPI/Master/inputFormate",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.MasterController",
+    "Method": "batchGetinputFormate",
+    "RelativePath": "api/SYS-KPI/Master/inputFormate-batch",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.PlanSystemController",
+    "Method": "BatchEndOfDay_GetKPI",
+    "RelativePath": "api/SYS-KPI/PlanSystem/batch-GetKPI",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "planid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "dimensionid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.PlanSystemController",
+    "Method": "BatchEndOfDay_MPlanKpiTarget",
+    "RelativePath": "api/SYS-KPI/PlanSystem/batch-MPlanKpiTarget",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "planid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "kpiid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.PlanSystemController",
+    "Method": "GetKPI",
+    "RelativePath": "api/SYS-KPI/PlanSystem/GetKPI",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "models",
+        "Type": "SME_API_KPI.Models.searchMPlanKpiModels",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.PlanSystemController",
+    "Method": "GetKpiAssign",
+    "RelativePath": "api/SYS-KPI/PlanSystem/GetKpiAssign",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "planid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "kpiid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.PlanSystemController",
+    "Method": "getkpidescription",
+    "RelativePath": "api/SYS-KPI/PlanSystem/getkpidescription",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "planid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "kpiid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.PlanSystemController",
+    "Method": "GetKpiTarget",
+    "RelativePath": "api/SYS-KPI/PlanSystem/GetKpiTarget",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "planid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "kpiid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.PlanSystemController",
+    "Method": "Getlist",
+    "RelativePath": "api/SYS-KPI/PlanSystem/Getlist",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "models",
+        "Type": "SME_API_KPI.Models.searchMPlanKpiListModels",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.PlanSystemController",
+    "Method": "GetPeriod",
+    "RelativePath": "api/SYS-KPI/PlanSystem/getPeriod",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "planYear",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "planTypeId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "periodID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.PlanSystemController",
+    "Method": "gettargetdescription",
+    "RelativePath": "api/SYS-KPI/PlanSystem/gettargetdescription",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "planid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "kpiid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SME_API_KPI.Controllers.PlanSystemController",
+    "Method": "Getweight",
+    "RelativePath": "api/SYS-KPI/PlanSystem/Getweight",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "planid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "kpiid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

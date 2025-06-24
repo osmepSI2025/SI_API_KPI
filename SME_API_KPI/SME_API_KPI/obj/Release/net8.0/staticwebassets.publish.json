@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "FJZBQvHQh50t6EPP97Sr0+ZWAIFxg6cbOq5SGZtATj8=",
+  "Source": "SME_API_KPI",
+  "BasePath": "_content/SME_API_KPI",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

@@ -1,0 +1,20 @@
+
+
+{
+  "responseCode": "200",
+  "responseMsg": "OK",
+  "data": [
+    {
+      "name": "ชื่อแผน A",
+      "planYear": 2566,
+      "planTypeId": "TS"
+
+    },
+    {
+      "name": "ชื่อแผน B",
+      "planYear": 2566,
+      "planTypeId": "SME"
+    }
+  ],
+  "timestamp": "2025-04-08T12:28:48.850Z"
+}

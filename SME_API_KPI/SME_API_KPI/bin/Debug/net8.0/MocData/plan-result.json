@@ -1,0 +1,11 @@
+{
+  "responseCode": "200",
+  "responseMsg": "OK",
+  "data": [
+    {
+      "status": "สถานะการบันทึกข้อมูล OK"
+
+    }
+  ],
+  "timestamp": "2025-04-08T12:28:48.850Z"
+}

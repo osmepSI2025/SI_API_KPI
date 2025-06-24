@@ -1,0 +1,14 @@
+{
+  "responseCode": "200",
+  "responseMsg": "OK",
+  "data": [
+    {
+      "planid": 1,
+      "kpiid": 2,
+      "code": "xxxx",
+      "description": "สวนทนาการ"
+
+    }
+  ],
+  "timestamp": "2025-04-08T12:28:48.850Z"
+}

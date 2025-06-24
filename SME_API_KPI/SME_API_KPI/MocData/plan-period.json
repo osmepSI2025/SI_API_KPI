@@ -1,0 +1,28 @@
+{
+  "responseCode": "200",
+  "responseMsg": "OK",
+  "data": [
+    {
+      "year": 2566,
+      "planid": "123456",
+      "startdate": "2025-01-01",
+      "enddate": "2025-12-31",
+      "userid": "654321",
+      "fullname": "ชื่อ-นามสกุลผู้ประเมิน A",
+      "period": "กลางปี"
+    },
+    {
+
+      "year": 2566,
+      "planid": "123456",
+      "startdate": "2025-01-01",
+      "enddate": "2025-12-31",
+      "userid": "471331000",
+      "fullname": "ชื่อ-นามสกุลผู้ประเมิน B",
+      "period": "ปลายปี"
+    }
+
+   
+  ],
+  "timestamp": "2025-04-08T12:28:48.850Z"
+}

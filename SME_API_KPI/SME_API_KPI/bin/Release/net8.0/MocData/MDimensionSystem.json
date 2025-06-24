@@ -1,0 +1,15 @@
+{
+  "responseCode": "200",
+  "responseMsg": "OK",
+  "data": [
+    {
+      "dimensionid": 1,
+      "dimensionname": "dimensionid 1"
+    },
+    {
+      "dimensionid": 2,
+      "dimensionname": "dimensionid 2"
+    }
+  ],
+  "timestamp": "2025-04-08T12:28:48.850Z"
+}

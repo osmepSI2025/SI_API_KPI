@@ -1,0 +1,6 @@
+@SME_API_KPI_HostAddress = http://localhost:5110
+
+GET {{SME_API_KPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

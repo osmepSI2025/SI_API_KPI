@@ -1,0 +1,24 @@
+{
+  "responseCode": "200",
+  "responseMsg": "OK",
+  "data": [
+    {
+      "planid": 1,
+      "kpiid": 2,
+
+      "target": [
+        {
+          "PeriodID": 1,
+          "perioddetail": "กลางป",
+          "sequence": 1,
+          "IsSkip": false,
+          "levelid": 1,
+          "leveldesc": "ข้อมูลที่ใช้อธิบายการวัดผล",
+          "labelstr": "ข้อมูลระดับ"
+        }
+      ]
+    }
+  
+  ],
+  "timestamp": "2025-04-08T12:28:48.850Z"
+}

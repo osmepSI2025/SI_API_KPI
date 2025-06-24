@@ -1,0 +1,601 @@
+{
+  "x-generator": "NSwag v13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v10.0.0.0))",
+  "swagger": "2.0",
+  "info": {
+    "title": "API SME KPI",
+    "description": "API documentation using Swagger 2.0",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/SYS-KPI/DimensionSystem/getdimenson": {
+      "get": {
+        "tags": [
+          "DimensionSystem"
+        ],
+        "operationId": "DimensionSystem_GetAllMgetdimenson",
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/DimensionSystem/getdimenson-batch": {
+      "get": {
+        "tags": [
+          "DimensionSystem"
+        ],
+        "operationId": "DimensionSystem_batchgetdimenson",
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/divisionSystem/getdivision": {
+      "get": {
+        "tags": [
+          "DivisionSystem"
+        ],
+        "operationId": "DivisionSystem_GetAllgetdivision",
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/divisionSystem/getdivision-batch": {
+      "get": {
+        "tags": [
+          "DivisionSystem"
+        ],
+        "operationId": "DivisionSystem_batchgetdivision",
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/Master/GetStatus": {
+      "get": {
+        "tags": [
+          "Master"
+        ],
+        "operationId": "Master_GetAllMStatus",
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/Master/GetYear": {
+      "get": {
+        "tags": [
+          "Master"
+        ],
+        "operationId": "Master_GetAllYear",
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/Master/GetYear-batch": {
+      "get": {
+        "tags": [
+          "Master"
+        ],
+        "operationId": "Master_batchYear",
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/Master/GetkpiType": {
+      "get": {
+        "tags": [
+          "Master"
+        ],
+        "operationId": "Master_GetAllGetkpiType",
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/Master/GetkpiType-batch": {
+      "get": {
+        "tags": [
+          "Master"
+        ],
+        "operationId": "Master_batchGetkpiType",
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/Master/Getmeasure": {
+      "get": {
+        "tags": [
+          "Master"
+        ],
+        "operationId": "Master_GetAllGetmeasure",
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/Master/Getmeasure-batch": {
+      "get": {
+        "tags": [
+          "Master"
+        ],
+        "operationId": "Master_batchGetmeasure",
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/Master/inputFormate": {
+      "get": {
+        "tags": [
+          "Master"
+        ],
+        "operationId": "Master_GetAllinputFormate",
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/Master/inputFormate-batch": {
+      "get": {
+        "tags": [
+          "Master"
+        ],
+        "operationId": "Master_batchGetinputFormate",
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/PlanSystem/Getlist": {
+      "post": {
+        "tags": [
+          "PlanSystem"
+        ],
+        "operationId": "PlanSystem_Getlist",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "models",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SearchMPlanKpiListModels"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/PlanSystem/GetKpiTarget": {
+      "get": {
+        "tags": [
+          "PlanSystem"
+        ],
+        "operationId": "PlanSystem_GetKpiTarget",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "planid",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "kpiid",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/PlanSystem/batch-MPlanKpiTarget": {
+      "get": {
+        "tags": [
+          "PlanSystem"
+        ],
+        "operationId": "PlanSystem_BatchEndOfDay_MPlanKpiTarget",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "planid",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "kpiid",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/PlanSystem/GetKPI": {
+      "post": {
+        "tags": [
+          "PlanSystem"
+        ],
+        "operationId": "PlanSystem_GetKPI",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "models",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SearchMPlanKpiModels"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/PlanSystem/batch-GetKPI": {
+      "get": {
+        "tags": [
+          "PlanSystem"
+        ],
+        "operationId": "PlanSystem_BatchEndOfDay_GetKPI",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "planid",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "dimensionid",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/PlanSystem/getPeriod": {
+      "get": {
+        "tags": [
+          "PlanSystem"
+        ],
+        "operationId": "PlanSystem_GetPeriod",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "planYear",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "planTypeId",
+            "in": "query",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "periodID",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/PlanSystem/gettargetdescription": {
+      "get": {
+        "tags": [
+          "PlanSystem"
+        ],
+        "operationId": "PlanSystem_gettargetdescription",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "planid",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "kpiid",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/PlanSystem/getkpidescription": {
+      "get": {
+        "tags": [
+          "PlanSystem"
+        ],
+        "operationId": "PlanSystem_getkpidescription",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "planid",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "kpiid",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/PlanSystem/GetKpiAssign": {
+      "get": {
+        "tags": [
+          "PlanSystem"
+        ],
+        "operationId": "PlanSystem_GetKpiAssign",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "planid",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "kpiid",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SYS-KPI/PlanSystem/Getweight": {
+      "get": {
+        "tags": [
+          "PlanSystem"
+        ],
+        "operationId": "PlanSystem_Getweight",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "planid",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "kpiid",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SearchMPlanKpiListModels": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "planyear": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "planTypeid": {
+          "type": "string"
+        }
+      }
+    },
+    "SearchMPlanKpiModels": {
+      "type": "object",
+      "required": [
+        "planid"
+      ],
+      "properties": {
+        "planid": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "dimensionid": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    }
+  }
+}

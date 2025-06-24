@@ -1,0 +1,25 @@
+{
+  "responseCode": "200",
+  "responseMsg": "OK",
+  "data": [
+    {
+      "planid": 1,
+      "planTypeid": "SME",
+      "planyear": 2568,
+      "plantitle": "planname 1",
+      "effectivedate": "2025-04-08",
+      "enddate": "2025-05-31"
+
+    },
+    {
+      "planid": 2,
+      "planTypeid": "TS",
+      "planyear": 2568,
+      "plantitle": "plantitle 23564",
+      "effectivedate": "2025-04-08",
+      "enddate": "2025-05-31"
+
+    }
+  ],
+  "timestamp": "2025-04-08T12:28:48.850Z"
+}

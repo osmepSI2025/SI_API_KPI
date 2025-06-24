@@ -1,0 +1,15 @@
+{
+  "responseCode": "200",
+  "responseMsg": "OK",
+  "data": [
+    {
+      "masterid": 1,
+      "description": "สถานะ 1"
+    },
+    {
+      "masterid": 2,
+      "description": "สถานะ 2"
+    }
+  ],
+  "timestamp": "2025-04-08T12:28:48.850Z"
+}
