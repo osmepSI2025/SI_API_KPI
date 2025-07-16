@@ -202,6 +202,7 @@ namespace SME_API_KPI.Service
                     {
                         Planid = r.Planid,
                         Kpiid = r.Kpiid,
+                        Kpidescription = r.Kpidescription
                     }).ToList();
 
                     return new MPlanKpiDescriptionApirespone

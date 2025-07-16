@@ -14,13 +14,14 @@
 
         public int Kpiid { get; set; }
 
-
+        public string? Kpidescription { get; set; }
     }
     public class searchMPlanKpiDescriptionModels
     {
         public int Planid { get; set; }
 
         public int? Kpiid { get; set; }
+
 
     }
 }

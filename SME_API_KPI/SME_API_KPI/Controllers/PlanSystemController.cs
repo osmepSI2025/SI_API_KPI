@@ -137,6 +137,7 @@ namespace SME_API_KPI.Controllers
             {
                 Planid = planid,
                 Kpiid = kpiid
+                
             };
 
 
