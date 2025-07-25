@@ -22,6 +22,7 @@ namespace SME_API_KPI.Controllers
         private readonly MExportEvalSystemService _mExportEvalSystemService;
         private readonly MKpiSystemKpiTargetService _mKpiSystemKpiTargetService;
         private readonly MKpiSystemAssignService _mKpiSystemAssignService;
+        private readonly KpiSystemResultService _kpiSystemResultService;
         public KpiSystemController(
             //MPlanPeriodService mPlanPeriodService
             // ,
@@ -35,7 +36,7 @@ namespace SME_API_KPI.Controllers
         //    , MPlanKpiService mPlanKpiService
             , MExportEvalSystemService mExportEvalSystemService
             ,MKpiSystemAssignService mKpiSystemAssignService
-
+            , KpiSystemResultService mKpiSystemResultService
             )
         {
             // _mPlanNameService = mPlanNameService;
@@ -52,6 +53,7 @@ namespace SME_API_KPI.Controllers
             _mKpiSystemKpiTargetService = mKpiSystemKpiTargetService;
             _mKpiSystemAssignService = mKpiSystemAssignService;
             _mKpiSystemWeightService = mKpiSystemWeightService;
+            _kpiSystemResultService = mKpiSystemResultService;
         }
 
         [HttpPost("kpiSystem/exportEval")]
@@ -111,8 +113,14 @@ namespace SME_API_KPI.Controllers
             var result = await _mKpiSystemWeightService.GetAllAsyncSearch_MPlanweight(models);
             return Ok(result);
         }
-      
-        
+
+        [HttpPut("kpiSystem/result")]
+        public async Task<IActionResult> kpiSystem_result(KpiSystemResultModels models)
+        {
+            var result = await _kpiSystemResultService.KpiSystem_PutResult(models);
+            return Ok(result);
+        }
+
     }
 
 

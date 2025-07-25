@@ -68,6 +68,8 @@ builder.Services.AddScoped<MKpiSystemKpiTargetRepository>();
 builder.Services.AddScoped<MKpiSystemAssignService>();
 builder.Services.AddScoped<MKpiSystemAssignRepository>();
 
+builder.Services.AddScoped<KpiSystemResultService>();
+
 
 builder.Services.AddScoped<IApiInformationRepository, ApiInformationRepository>();
 builder.Services.AddScoped<ICallAPIService, CallAPIService>(); // Register ICallAPIService with CallAPIService

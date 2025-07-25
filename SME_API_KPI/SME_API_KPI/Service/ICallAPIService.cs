@@ -8,5 +8,7 @@ namespace SME_API_KPI.Services
         Task<string> GetDataTargetAndKpiDesApiAsync(MapiInformationModels apiModels, string planid,string kpiid);
 
         Task<string> GetDataPlanPeroidApiAsync(MapiInformationModels apiModels,int planyear ,string planTypeid, int? peroidid);
+
+        Task<string> PutDataApiAsync(MapiInformationModels apiModels, object xdata);
     }
 }
