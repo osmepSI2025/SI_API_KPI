@@ -29,6 +29,8 @@ public partial class KPIDBContext : DbContext
 
     public virtual DbSet<MKpiSystemKpiTarget> MKpiSystemKpiTargets { get; set; }
 
+    public virtual DbSet<MKpiSystemWeight> MKpiSystemWeights { get; set; }
+
     public virtual DbSet<MKpiType> MKpiTypes { get; set; }
 
     public virtual DbSet<MMeasure> MMeasures { get; set; }
@@ -49,8 +51,6 @@ public partial class KPIDBContext : DbContext
 
     public virtual DbSet<MPlanTargetDescription> MPlanTargetDescriptions { get; set; }
 
-    public virtual DbSet<MPlanweight> MPlanweights { get; set; }
-
     public virtual DbSet<MScheduledJob> MScheduledJobs { get; set; }
 
     public virtual DbSet<MStatus> MStatuses { get; set; }
@@ -60,6 +60,8 @@ public partial class KPIDBContext : DbContext
     public virtual DbSet<TKpiSystemKpiTarget> TKpiSystemKpiTargets { get; set; }
 
     public virtual DbSet<TKpiSystemKpiTargetLevel> TKpiSystemKpiTargetLevels { get; set; }
+
+    public virtual DbSet<TKpiSystemWeight> TKpiSystemWeights { get; set; }
 
     public virtual DbSet<TKpiTarget> TKpiTargets { get; set; }
 
@@ -209,6 +211,32 @@ public partial class KPIDBContext : DbContext
             entity.Property(e => e.PlanId).HasMaxLength(50);
         });
 
+        modelBuilder.Entity<MKpiSystemWeight>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__M_KpiSys__3214EC07BD9053DB");
+
+            entity.ToTable("M_KpiSystemWeight");
+
+            entity.HasIndex(e => e.KpiId, "UQ__M_KpiSys__8C69D5BFF0BEAFEC").IsUnique();
+
+            entity.Property(e => e.CreateBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreateDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.KpiId)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Planid)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdateBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+        });
+
         modelBuilder.Entity<MKpiType>(entity =>
         {
             entity.HasKey(e => e.Masterid);
@@ -350,18 +378,6 @@ public partial class KPIDBContext : DbContext
             entity.Property(e => e.Target).HasColumnName("target");
         });
 
-        modelBuilder.Entity<MPlanweight>(entity =>
-        {
-            entity.ToTable("M_Planweight", "SME_KPI");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Kpiid).HasColumnName("kpiid");
-            entity.Property(e => e.Planid).HasColumnName("planid");
-            entity.Property(e => e.Weight)
-                .HasColumnType("decimal(18, 0)")
-                .HasColumnName("weight");
-        });
-
         modelBuilder.Entity<MScheduledJob>(entity =>
         {
             entity.ToTable("M_ScheduledJobs", "SME_KPI");
@@ -422,6 +438,39 @@ public partial class KPIDBContext : DbContext
             entity.HasOne(d => d.Target).WithMany(p => p.TKpiSystemKpiTargetLevels)
                 .HasForeignKey(d => d.TargetId)
                 .HasConstraintName("FK_T_KpiSystemKpiTargetLevel_TargetId");
+        });
+
+        modelBuilder.Entity<TKpiSystemWeight>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__T_KpiSys__3214EC077B9E678C");
+
+            entity.ToTable("T_KpiSystemWeight");
+
+            entity.HasIndex(e => new { e.KpiId, e.PeriodId }, "UQ_KpiSystemWeight").IsUnique();
+
+            entity.Property(e => e.CreateBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreateDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.KpiId)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.TargetValue).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.UpdateBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+            entity.Property(e => e.Weight)
+                .HasDefaultValueSql("((0.00))")
+                .HasColumnType("decimal(5, 2)");
+
+            entity.HasOne(d => d.Kpi).WithMany(p => p.TKpiSystemWeights)
+                .HasPrincipalKey(p => p.KpiId)
+                .HasForeignKey(d => d.KpiId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_T_KpiSystemWeight_M_KpiSystemWeight");
         });
 
         modelBuilder.Entity<TKpiTarget>(entity =>

@@ -12,7 +12,7 @@ namespace SME_API_KPI.Controllers
         private readonly MPlanTargetDescriptionService _mPlanTargetDescriptionService;
         private readonly MPlanKpiDescriptionService _mPlanKpiDescriptionService;
       
-        private readonly MPlanweightService _mPlanweightService;    
+       
         private readonly MPlanResultService _mPlanResultService;
         private readonly MPlanKpiListService _mPlanKpiListService;
     
@@ -25,7 +25,7 @@ namespace SME_API_KPI.Controllers
             MPlanTargetDescriptionService mPlanTargetService,
             MPlanKpiDescriptionService mPlanKpiDescriptionService
  
-            , MPlanweightService mPlanweightService, MPlanResultService mPlanResultService
+          //, MPlanResultService mPlanResultService
             , MPlanKpiListService mPlanKpiListService
     
            // , MPlanKpiService mPlanKpiService
@@ -37,8 +37,8 @@ namespace SME_API_KPI.Controllers
             _mPlanTargetDescriptionService = mPlanTargetService;
             _mPlanKpiDescriptionService = mPlanKpiDescriptionService;
          
-            _mPlanweightService = mPlanweightService;
-            _mPlanResultService = mPlanResultService;
+         
+         //   _mPlanResultService = mPlanResultService;
             _mPlanKpiListService = mPlanKpiListService;
           
         //    _mPlanKpiService = mPlanKpiService;

@@ -9,16 +9,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Entities\MPlanweight.cs" />
     <Compile Remove="Models\MPlanKpiApiresponexxx.cs" />
     <Compile Remove="Repository\MPlanKpiAssignRepository.cs" />
     <Compile Remove="Repository\MPlanKpiTargetRepository.cs" />
     <Compile Remove="Repository\MPlanNameRepository.cs" />
     <Compile Remove="Repository\MPlanPeriodRepository.cs" />
+    <Compile Remove="Repository\MPlanweightRepository.cs" />
     <Compile Remove="Service\MPlanKpiAssignService.cs" />
     <Compile Remove="Service\MPlanKpiService.cs" />
     <Compile Remove="Service\MPlanKpiTargetService.cs" />
     <Compile Remove="Service\MPlanNameService.cs" />
     <Compile Remove="Service\MPlanPeriodService.cs" />
+    <Compile Remove="Service\MPlanweightService.cs" />
   </ItemGroup>
 
   <ItemGroup>

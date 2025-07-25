@@ -2,29 +2,28 @@
 {
     public class MPlanweightApirespone
     {
-        public string ResponseCode { get; set; }
-        public string ResponseMsg { get; set; }
-        public List<MPlanweightModels> data { get; set; }
-        public DateTime Timestamp { get; set; }
+        public int status { get; set; }
+        public string message { get; set; }
+        public MPlanweightData? data { get; set; }
     }
 
-    public class MPlanweightModels
+    public class MPlanweightData
     {
-        public int Planid { get; set; }
+        public string kpiid { get; set; }
+        public string kpiname { get; set; }
+        public List<MPlanweightTarget> target { get; set; }
+    }
 
-        public int Kpiid { get; set; }
-
-        public decimal? Weight { get; set; }
-
-     
-
-
+    public class MPlanweightTarget
+    {
+        public int periodId { get; set; }
+        public decimal weight { get; set; }
     }
     public class searchMPlanweightModels
     {
-        public int Planid { get; set; }
+        public string Planid { get; set; }
 
-        public int? Kpiid { get; set; }
+        public string? Kpiid { get; set; }
 
     }
 }

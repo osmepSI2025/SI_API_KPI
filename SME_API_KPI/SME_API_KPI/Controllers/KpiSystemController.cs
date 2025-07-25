@@ -12,7 +12,7 @@ namespace SME_API_KPI.Controllers
         private readonly MPlanTargetDescriptionService  _mPlanTargetDescriptionService;
         private readonly MPlanKpiDescriptionService _mPlanKpiDescriptionService;
       //  private readonly MPlanKpiAssignService _mPlanKpiAssignService;
-        private readonly MPlanweightService _mPlanweightService;    
+        private readonly MKpiSystemWeightService _mKpiSystemWeightService;    
         private readonly MPlanResultService _mPlanResultService;
         private readonly MPlanKpiListService _mPlanKpiListService;
         //private readonly MPlanKpiTargetService _mPlanKpiTargetService;
@@ -28,7 +28,8 @@ namespace SME_API_KPI.Controllers
             MPlanTargetDescriptionService mPlanTargetService
             , MPlanKpiDescriptionService mPlanKpiDescriptionService
           //  , MPlanKpiAssignService mPlanKpiAssignService
-            , MPlanweightService mPlanweightService, MPlanResultService mPlanResultService
+            , MKpiSystemWeightService mKpiSystemWeightService,
+            MPlanResultService mPlanResultService
             , MPlanKpiListService mPlanKpiListService
             , MKpiSystemKpiTargetService mKpiSystemKpiTargetService
         //    , MPlanKpiService mPlanKpiService
@@ -42,7 +43,7 @@ namespace SME_API_KPI.Controllers
             _mPlanTargetDescriptionService = mPlanTargetService;
             _mPlanKpiDescriptionService = mPlanKpiDescriptionService;
            // _mPlanKpiAssignService = mPlanKpiAssignService;
-            _mPlanweightService = mPlanweightService;
+            _mKpiSystemAssignService = mKpiSystemAssignService;
             _mPlanResultService = mPlanResultService;
             _mPlanKpiListService = mPlanKpiListService;
           
@@ -50,6 +51,7 @@ namespace SME_API_KPI.Controllers
             _mExportEvalSystemService = mExportEvalSystemService;
             _mKpiSystemKpiTargetService = mKpiSystemKpiTargetService;
             _mKpiSystemAssignService = mKpiSystemAssignService;
+            _mKpiSystemWeightService = mKpiSystemWeightService;
         }
 
         [HttpPost("kpiSystem/exportEval")]
@@ -102,16 +104,11 @@ namespace SME_API_KPI.Controllers
             return Ok(result);
         }
         [HttpPost("kpiSystem/Getweight")]
-        public async Task<IActionResult> Getweight(int planid, int kpiid)
+        public async Task<IActionResult> Getweight(searchMPlanweightModels models)
         {
-            var models = new searchMPlanweightModels
-            {
-                Planid = planid,
-                Kpiid = kpiid
-            };
+         
 
-
-            var result = await _mPlanweightService.GetAllAsyncSearch_MPlanweight(models);
+            var result = await _mKpiSystemWeightService.GetAllAsyncSearch_MPlanweight(models);
             return Ok(result);
         }
       

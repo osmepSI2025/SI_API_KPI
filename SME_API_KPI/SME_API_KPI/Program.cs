@@ -48,8 +48,8 @@ builder.Services.AddScoped<MPlanTargetDescriptionService>();
 builder.Services.AddScoped<MPlanKpiDescriptionService>();
 builder.Services.AddScoped<MPlanKpiDescriptionRepository>();
 
-builder.Services.AddScoped<MPlanweightService>();
-builder.Services.AddScoped<MPlanweightRepository>();
+builder.Services.AddScoped<MKpiSystemWeightService>();
+builder.Services.AddScoped<MKpiSystemWeightRepository>();
 builder.Services.AddScoped<MPlanResultService>();
 builder.Services.AddScoped<MPlanResultRepository>();
 builder.Services.AddScoped<MPlanKpiListRepository>();
