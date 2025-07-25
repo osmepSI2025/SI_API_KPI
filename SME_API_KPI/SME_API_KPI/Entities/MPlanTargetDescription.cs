@@ -7,9 +7,9 @@ public partial class MPlanTargetDescription
 {
     public int Id { get; set; }
 
-    public int? Planid { get; set; }
+    public string? Planid { get; set; }
 
-    public int? Kpiid { get; set; }
+    public string? Kpiid { get; set; }
 
     public string? Target { get; set; }
 }

@@ -10,7 +10,7 @@
 
     public class MDivisionModels
     {
-        public int Divisionid { get; set; }
+        public string Divisionid { get; set; }
         public string? Divisioncode { get; set; }
         public string? Divisionname { get; set; }
     }

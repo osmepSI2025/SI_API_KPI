@@ -88,7 +88,7 @@ namespace SME_API_KPI.Service
                 WriteIndented = true
             };
             var MInputFormateApirespone = new MInputFormateApirespone();
-            var LApi = await _repositoryApi.GetAllAsync(new MapiInformationModels { ServiceNameCode = "GetStatus" });
+            var LApi = await _repositoryApi.GetAllAsync(new MapiInformationModels { ServiceNameCode = "inputFormate" });
             var apiParam = LApi.Select(x => new MapiInformationModels
             {
                 ServiceNameCode = x.ServiceNameCode,

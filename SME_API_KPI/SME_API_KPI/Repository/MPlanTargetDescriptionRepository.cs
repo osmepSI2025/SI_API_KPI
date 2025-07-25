@@ -1,6 +1,7 @@
-using SME_API_KPI.Entities;
 using Microsoft.EntityFrameworkCore;
+using SME_API_KPI.Entities;
 using SME_API_KPI.Models;
+using System.Numerics;
 
 namespace SME_API_KPI.Repository
 {
@@ -25,11 +26,11 @@ namespace SME_API_KPI.Repository
             }
         }
 
-        public async Task<MPlanTargetDescription?> GetByIdAsync(int? id)
+        public async Task<MPlanTargetDescription?> GetByIdAsync(string? planid, string? kpiid)
         {
             try
             {
-                return await _context.MPlanTargetDescriptions.FirstOrDefaultAsync(e=>e.Planid == id);
+                return await _context.MPlanTargetDescriptions.FirstOrDefaultAsync(e=>e.Planid == planid && e.Kpiid == kpiid);
             }
             catch
             {
@@ -88,13 +89,13 @@ namespace SME_API_KPI.Repository
 
 
 
-                if (searchModel.Planid != 0 && searchModel.Planid != 0)
+                if (searchModel.Planid != "" && searchModel.Planid != null)
                 {
                     query = query.Where(bu =>
                         bu.Planid == searchModel.Planid
                     );
                 }
-                if (searchModel.Kpiid != 0 && searchModel.Kpiid != 0)
+                if (searchModel.Kpiid !="" && searchModel.Kpiid != null)
                 {
                     query = query.Where(bu =>
                             bu.Kpiid == searchModel.Kpiid);

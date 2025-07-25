@@ -20,6 +20,4 @@ public partial class TPlanKpilist
     public string? Target { get; set; }
 
     public virtual MPlanKpi MPlanKpi { get; set; } = null!;
-
-    public virtual ICollection<TPlanKpidivision> TPlanKpidivisions { get; set; } = new List<TPlanKpidivision>();
 }

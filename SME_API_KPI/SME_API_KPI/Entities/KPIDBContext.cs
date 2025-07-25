@@ -21,7 +21,13 @@ public partial class KPIDBContext : DbContext
 
     public virtual DbSet<MDivision> MDivisions { get; set; }
 
+    public virtual DbSet<MExportEval> MExportEvals { get; set; }
+
     public virtual DbSet<MInputFormate> MInputFormates { get; set; }
+
+    public virtual DbSet<MKpiSystemAssign> MKpiSystemAssigns { get; set; }
+
+    public virtual DbSet<MKpiSystemKpiTarget> MKpiSystemKpiTargets { get; set; }
 
     public virtual DbSet<MKpiType> MKpiTypes { get; set; }
 
@@ -31,13 +37,9 @@ public partial class KPIDBContext : DbContext
 
     public virtual DbSet<MPlanKpi> MPlanKpis { get; set; }
 
-    public virtual DbSet<MPlanKpiAssign> MPlanKpiAssigns { get; set; }
-
     public virtual DbSet<MPlanKpiDescription> MPlanKpiDescriptions { get; set; }
 
     public virtual DbSet<MPlanKpiList> MPlanKpiLists { get; set; }
-
-    public virtual DbSet<MPlanKpiTarget> MPlanKpiTargets { get; set; }
 
     public virtual DbSet<MPlanName> MPlanNames { get; set; }
 
@@ -53,25 +55,31 @@ public partial class KPIDBContext : DbContext
 
     public virtual DbSet<MStatus> MStatuses { get; set; }
 
-    public virtual DbSet<TKpiTarget> TKpiTargets { get; set; }
+    public virtual DbSet<TKpiSystemAssignDivision> TKpiSystemAssignDivisions { get; set; }
 
-    public virtual DbSet<TPlanKpidivision> TPlanKpidivisions { get; set; }
+    public virtual DbSet<TKpiSystemKpiTarget> TKpiSystemKpiTargets { get; set; }
+
+    public virtual DbSet<TKpiSystemKpiTargetLevel> TKpiSystemKpiTargetLevels { get; set; }
+
+    public virtual DbSet<TKpiTarget> TKpiTargets { get; set; }
 
     public virtual DbSet<TPlanKpilist> TPlanKpilists { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Server=27.254.173.62;Database=bluecarg_SME_API_KPI;User Id=SME_KPI;Password=1Uf@e9g60;TrustServerCertificate=True;");
+    public virtual DbSet<TPlanPeriodDetail> TPlanPeriodDetails { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=192.168.9.155;Database=bluecarg_SME_API_KPI;User Id=sa;Password=Osmep@2025;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasDefaultSchema("SME_KPI");
+        modelBuilder.UseCollation("Thai_CI_AS");
 
         modelBuilder.Entity<MApiInformation>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_MApiInformation");
 
-            entity.ToTable("M_ApiInformation");
+            entity.ToTable("M_ApiInformation", "SME_KPI");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AccessToken).HasColumnName("accessToken");
@@ -93,36 +101,81 @@ public partial class KPIDBContext : DbContext
         {
             entity.HasKey(e => e.Dimensionid);
 
-            entity.ToTable("M_DimensionSystem");
+            entity.ToTable("M_DimensionSystem", "SME_KPI");
 
             entity.Property(e => e.Dimensionid)
                 .ValueGeneratedNever()
                 .HasColumnName("dimensionid");
             entity.Property(e => e.Dimensionname).HasColumnName("dimensionname");
+            entity.Property(e => e.Plantypeid)
+                .HasMaxLength(50)
+                .HasColumnName("plantypeid");
         });
 
         modelBuilder.Entity<MDivision>(entity =>
         {
-            entity.HasKey(e => e.Divisionid);
+            entity.ToTable("M_Division", "SME_KPI");
 
-            entity.ToTable("M_Division");
-
-            entity.Property(e => e.Divisionid)
-                .ValueGeneratedNever()
-                .HasColumnName("divisionid");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Divisioncode)
                 .HasMaxLength(255)
                 .HasColumnName("divisioncode");
+            entity.Property(e => e.Divisionid)
+                .HasMaxLength(255)
+                .HasColumnName("divisionid");
             entity.Property(e => e.Divisionname)
                 .HasMaxLength(255)
                 .HasColumnName("divisionname");
+        });
+
+        modelBuilder.Entity<MExportEval>(entity =>
+        {
+            entity.ToTable("M_ExportEval");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CoreWeight).HasColumnName("core_weight");
+            entity.Property(e => e.Division)
+                .HasMaxLength(150)
+                .HasColumnName("division");
+            entity.Property(e => e.EmpCode)
+                .HasMaxLength(50)
+                .HasColumnName("empCode");
+            entity.Property(e => e.Fullname)
+                .HasMaxLength(150)
+                .HasColumnName("fullname");
+            entity.Property(e => e.IndvWeight).HasColumnName("indv_weight");
+            entity.Property(e => e.KpiPlanInvidualApproveId1)
+                .HasMaxLength(150)
+                .HasColumnName("kpiPlanInvidualApproveId1");
+            entity.Property(e => e.KpiPlanInvidualApproveId2)
+                .HasMaxLength(150)
+                .HasColumnName("kpiPlanInvidualApproveId2");
+            entity.Property(e => e.ManagerialWeight)
+                .HasMaxLength(150)
+                .HasColumnName("managerial_weight");
+            entity.Property(e => e.PlanId)
+                .HasMaxLength(150)
+                .HasColumnName("planID");
+            entity.Property(e => e.Position)
+                .HasMaxLength(150)
+                .HasColumnName("position");
+            entity.Property(e => e.Segment)
+                .HasMaxLength(150)
+                .HasColumnName("segment");
+            entity.Property(e => e.Seq).HasColumnName("seq");
+            entity.Property(e => e.UserApprove1)
+                .HasMaxLength(150)
+                .HasColumnName("userApprove1");
+            entity.Property(e => e.UserApprove2)
+                .HasMaxLength(150)
+                .HasColumnName("userApprove2");
         });
 
         modelBuilder.Entity<MInputFormate>(entity =>
         {
             entity.HasKey(e => e.Masterid);
 
-            entity.ToTable("M_InputFormate");
+            entity.ToTable("M_InputFormate", "SME_KPI");
 
             entity.Property(e => e.Masterid)
                 .ValueGeneratedNever()
@@ -130,11 +183,37 @@ public partial class KPIDBContext : DbContext
             entity.Property(e => e.Description).HasColumnName("description");
         });
 
+        modelBuilder.Entity<MKpiSystemAssign>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__M_KpiSys__3214EC079EFB0E43");
+
+            entity.ToTable("M_KpiSystemAssign");
+
+            entity.HasIndex(e => e.KpiId, "UQ__M_KpiSys__8C69D5BF97AD85F7").IsUnique();
+
+            entity.Property(e => e.KpiId).HasMaxLength(50);
+            entity.Property(e => e.KpiName).HasMaxLength(1000);
+            entity.Property(e => e.PlanId).HasMaxLength(50);
+            entity.Property(e => e.Weight).HasColumnType("decimal(10, 2)");
+        });
+
+        modelBuilder.Entity<MKpiSystemKpiTarget>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__M_KpiSys__3214EC0772DE58EA");
+
+            entity.ToTable("M_KpiSystemKpiTarget");
+
+            entity.HasIndex(e => e.KpiId, "UQ_M_KpiSystemKpiTarget_KpiId").IsUnique();
+
+            entity.Property(e => e.KpiId).HasMaxLength(50);
+            entity.Property(e => e.PlanId).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<MKpiType>(entity =>
         {
             entity.HasKey(e => e.Masterid);
 
-            entity.ToTable("M_KpiType");
+            entity.ToTable("M_KpiType", "SME_KPI");
 
             entity.Property(e => e.Masterid)
                 .ValueGeneratedNever()
@@ -144,7 +223,7 @@ public partial class KPIDBContext : DbContext
 
         modelBuilder.Entity<MMeasure>(entity =>
         {
-            entity.ToTable("M_Measure");
+            entity.ToTable("M_Measure", "SME_KPI");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description).HasColumnName("description");
@@ -155,7 +234,7 @@ public partial class KPIDBContext : DbContext
         {
             entity.HasKey(e => e.Year).HasName("PK_M_BudgetYear");
 
-            entity.ToTable("M_PlanBudgetYear");
+            entity.ToTable("M_PlanBudgetYear", "SME_KPI");
 
             entity.Property(e => e.Year)
                 .ValueGeneratedNever()
@@ -166,41 +245,28 @@ public partial class KPIDBContext : DbContext
         {
             entity.HasKey(e => new { e.PlanId, e.Kpiid }).HasName("PK__M_PlanKP__72724B9D34509BDB");
 
-            entity.ToTable("M_PlanKPI");
+            entity.ToTable("M_PlanKPI", "SME_KPI");
 
             entity.Property(e => e.Kpiid).HasColumnName("KPIId");
         });
 
-        modelBuilder.Entity<MPlanKpiAssign>(entity =>
-        {
-            entity.ToTable("M_PlanKpiAssign");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Code)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("code");
-            entity.Property(e => e.Description)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("description");
-            entity.Property(e => e.Kpiid).HasColumnName("kpiid");
-            entity.Property(e => e.Planid).HasColumnName("planid");
-        });
-
         modelBuilder.Entity<MPlanKpiDescription>(entity =>
         {
-            entity.ToTable("M_PlanKpiDescription");
+            entity.ToTable("M_PlanKpiDescription", "SME_KPI");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Kpidescription).HasColumnName("kpidescription");
-            entity.Property(e => e.Kpiid).HasColumnName("kpiid");
-            entity.Property(e => e.Planid).HasColumnName("planid");
+            entity.Property(e => e.Kpiid)
+                .HasMaxLength(50)
+                .HasColumnName("kpiid");
+            entity.Property(e => e.Planid)
+                .HasMaxLength(50)
+                .HasColumnName("planid");
         });
 
         modelBuilder.Entity<MPlanKpiList>(entity =>
         {
-            entity.ToTable("M_PlanKpiList");
+            entity.ToTable("M_PlanKpiList", "SME_KPI");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Effectivedate)
@@ -212,7 +278,9 @@ public partial class KPIDBContext : DbContext
             entity.Property(e => e.PlanTypeid)
                 .HasMaxLength(50)
                 .HasColumnName("planTypeid");
-            entity.Property(e => e.Planid).HasColumnName("planid");
+            entity.Property(e => e.Planid)
+                .HasMaxLength(50)
+                .HasColumnName("planid");
             entity.Property(e => e.Planremark).HasColumnName("planremark");
             entity.Property(e => e.Plantitle)
                 .HasMaxLength(255)
@@ -220,18 +288,9 @@ public partial class KPIDBContext : DbContext
             entity.Property(e => e.Planyear).HasColumnName("planyear");
         });
 
-        modelBuilder.Entity<MPlanKpiTarget>(entity =>
-        {
-            entity.HasKey(e => new { e.PlanId, e.Kpiid }).HasName("PK__M_PlanKp__72724B9DBF373EBD");
-
-            entity.ToTable("M_PlanKpiTarget");
-
-            entity.Property(e => e.Kpiid).HasColumnName("KPIId");
-        });
-
         modelBuilder.Entity<MPlanName>(entity =>
         {
-            entity.ToTable("M_PlanName");
+            entity.ToTable("M_PlanName", "SME_KPI");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.PlanTypeId).HasMaxLength(50);
@@ -239,37 +298,21 @@ public partial class KPIDBContext : DbContext
 
         modelBuilder.Entity<MPlanPeriod>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_M_Period");
+            entity.HasKey(e => e.Id).HasName("PK__M_PlanPe__3214EC07A8A3328C");
 
             entity.ToTable("M_PlanPeriod");
 
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Enddate)
-                .HasMaxLength(50)
-                .HasColumnName("enddate");
-            entity.Property(e => e.Fullname).HasColumnName("fullname");
-            entity.Property(e => e.Period)
-                .HasMaxLength(50)
-                .HasColumnName("period");
-            entity.Property(e => e.PeriodId).HasColumnName("periodID");
-            entity.Property(e => e.PlanTypeId)
-                .HasMaxLength(50)
-                .HasColumnName("planTypeId");
-            entity.Property(e => e.PlanYear).HasColumnName("planYear");
-            entity.Property(e => e.Planid)
-                .HasMaxLength(50)
-                .HasColumnName("planid");
-            entity.Property(e => e.Startdate)
-                .HasMaxLength(50)
-                .HasColumnName("startdate");
-            entity.Property(e => e.Userid)
-                .HasMaxLength(50)
-                .HasColumnName("userid");
+            entity.HasIndex(e => e.PlanId, "UQ__M_PlanPe__755C22B6D2A5A568").IsUnique();
+
+            entity.Property(e => e.EffectiveDate).HasColumnType("date");
+            entity.Property(e => e.EndDate).HasColumnType("date");
+            entity.Property(e => e.PlanId).HasMaxLength(50);
+            entity.Property(e => e.PlanTypeId).HasMaxLength(20);
         });
 
         modelBuilder.Entity<MPlanResult>(entity =>
         {
-            entity.ToTable("M_PlanResult");
+            entity.ToTable("M_PlanResult", "SME_KPI");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Assignid)
@@ -291,19 +334,25 @@ public partial class KPIDBContext : DbContext
 
         modelBuilder.Entity<MPlanTargetDescription>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK_Table_1");
+
             entity.ToTable("M_PlanTargetDescription");
 
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Kpiid).HasColumnName("kpiid");
-            entity.Property(e => e.Planid).HasColumnName("planid");
-            entity.Property(e => e.Target)
-                .HasMaxLength(255)
-                .HasColumnName("target");
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("id");
+            entity.Property(e => e.Kpiid)
+                .HasMaxLength(50)
+                .HasColumnName("kpiid");
+            entity.Property(e => e.Planid)
+                .HasMaxLength(50)
+                .HasColumnName("planid");
+            entity.Property(e => e.Target).HasColumnName("target");
         });
 
         modelBuilder.Entity<MPlanweight>(entity =>
         {
-            entity.ToTable("M_Planweight");
+            entity.ToTable("M_Planweight", "SME_KPI");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Kpiid).HasColumnName("kpiid");
@@ -315,7 +364,7 @@ public partial class KPIDBContext : DbContext
 
         modelBuilder.Entity<MScheduledJob>(entity =>
         {
-            entity.ToTable("M_ScheduledJobs");
+            entity.ToTable("M_ScheduledJobs", "SME_KPI");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.JobName).HasMaxLength(150);
@@ -325,51 +374,77 @@ public partial class KPIDBContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK_M_StatusData");
 
-            entity.ToTable("M_Status");
+            entity.ToTable("M_Status", "SME_KPI");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description).HasColumnName("description");
             entity.Property(e => e.Masterid).HasColumnName("masterid");
         });
 
+        modelBuilder.Entity<TKpiSystemAssignDivision>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__T_KpiSys__3214EC075D0CDDE3");
+
+            entity.ToTable("T_KpiSystemAssignDivision");
+
+            entity.Property(e => e.DivisionName).HasMaxLength(255);
+            entity.Property(e => e.KpiId).HasMaxLength(50);
+
+            entity.HasOne(d => d.Kpi).WithMany(p => p.TKpiSystemAssignDivisions)
+                .HasPrincipalKey(p => p.KpiId)
+                .HasForeignKey(d => d.KpiId)
+                .HasConstraintName("FK_KpiSystemAssign_Division");
+        });
+
+        modelBuilder.Entity<TKpiSystemKpiTarget>(entity =>
+        {
+            entity.HasKey(e => e.TargetId).HasName("PK__T_KpiSys__2B1F0F96387D8B49");
+
+            entity.ToTable("T_KpiSystemKpiTarget");
+
+            entity.Property(e => e.KpiId).HasMaxLength(50);
+            entity.Property(e => e.Weight).HasColumnType("decimal(10, 2)");
+
+            entity.HasOne(d => d.Kpi).WithMany(p => p.TKpiSystemKpiTargets)
+                .HasPrincipalKey(p => p.KpiId)
+                .HasForeignKey(d => d.KpiId)
+                .HasConstraintName("FK_T_KpiSystemKpiTarget_KpiId");
+        });
+
+        modelBuilder.Entity<TKpiSystemKpiTargetLevel>(entity =>
+        {
+            entity.HasKey(e => e.LevelId).HasName("PK__T_KpiSys__09F03C26DDF28AC4");
+
+            entity.ToTable("T_KpiSystemKpiTargetLevel");
+
+            entity.Property(e => e.LabelStr).HasMaxLength(255);
+
+            entity.HasOne(d => d.Target).WithMany(p => p.TKpiSystemKpiTargetLevels)
+                .HasForeignKey(d => d.TargetId)
+                .HasConstraintName("FK_T_KpiSystemKpiTargetLevel_TargetId");
+        });
+
         modelBuilder.Entity<TKpiTarget>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__T_KPI_Ta__3214EC073C46451A");
 
-            entity.ToTable("T_KPI_Target");
+            entity.ToTable("T_KPI_Target", "SME_KPI");
 
-            entity.Property(e => e.Kpiid).HasColumnName("KPIId");
+            entity.Property(e => e.Kpiid)
+                .HasMaxLength(50)
+                .HasColumnName("KPIId");
             entity.Property(e => e.LabelStr).HasMaxLength(100);
             entity.Property(e => e.LevelDesc).HasMaxLength(255);
             entity.Property(e => e.PeriodDetail).HasMaxLength(100);
             entity.Property(e => e.PeriodId).HasColumnName("PeriodID");
-
-            entity.HasOne(d => d.MPlanKpiTarget).WithMany(p => p.TKpiTargets)
-                .HasForeignKey(d => new { d.PlanId, d.Kpiid })
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__T_KPI_Target__5BE2A6F2");
-        });
-
-        modelBuilder.Entity<TPlanKpidivision>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__T_PlanKP__3214EC07640AE7B0");
-
-            entity.ToTable("T_PlanKPIDivision");
-
-            entity.Property(e => e.DivisionName).HasMaxLength(255);
-            entity.Property(e => e.KpilistId).HasColumnName("KPIListId");
-
-            entity.HasOne(d => d.Kpilist).WithMany(p => p.TPlanKpidivisions)
-                .HasForeignKey(d => d.KpilistId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__T_PlanKPI__KPILi__6383C8BA");
+            entity.Property(e => e.PlanId).HasMaxLength(50);
         });
 
         modelBuilder.Entity<TPlanKpilist>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__T_PlanKP__3214EC072B0EECDE");
 
-            entity.ToTable("T_PlanKPIList");
+            entity.ToTable("T_PlanKPIList", "SME_KPI");
 
             entity.Property(e => e.Kpiid).HasColumnName("KPIId");
             entity.Property(e => e.Kpiindex).HasColumnName("KPIIndex");
@@ -383,6 +458,22 @@ public partial class KPIDBContext : DbContext
                 .HasForeignKey(d => new { d.PlanId, d.Kpiid })
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__T_PlanKPIList__60A75C0F");
+        });
+
+        modelBuilder.Entity<TPlanPeriodDetail>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__T_PlanPe__3214EC0750217AC7");
+
+            entity.ToTable("T_PlanPeriodDetail");
+
+            entity.Property(e => e.EffectiveDate).HasColumnType("date");
+            entity.Property(e => e.EndDate).HasColumnType("date");
+            entity.Property(e => e.PlanId).HasMaxLength(50);
+
+            entity.HasOne(d => d.Plan).WithMany(p => p.TPlanPeriodDetails)
+                .HasPrincipalKey(p => p.PlanId)
+                .HasForeignKey(d => d.PlanId)
+                .HasConstraintName("FK_T_PlanPeriodDetail_PlanId");
         });
 
         OnModelCreatingPartial(modelBuilder);

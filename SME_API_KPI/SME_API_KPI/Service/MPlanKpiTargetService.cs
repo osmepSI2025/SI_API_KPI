@@ -1,4 +1,4 @@
-using SME_API_KPI.Entities;
+﻿using SME_API_KPI.Entities;
 using SME_API_KPI.Models;
 using SME_API_KPI.Repository;
 using SME_API_KPI.Services;
@@ -111,62 +111,110 @@ namespace SME_API_KPI.Service
 
             }).FirstOrDefault(); // Use FirstOrDefault to handle empty lists
 
-            var apiResponse = await _serviceApi.GetDataApiAsync(apiParam, xmodel);
-            var result = JsonSerializer.Deserialize<MPlanKpiTargetApirespone>(apiResponse, options);
+            try {
+                var apiResponse = await _serviceApi.GetDataApiAsync(apiParam, xmodel);
 
-            MPlanKpiTargetApirespone = result ?? new MPlanKpiTargetApirespone();
+                var result = JsonSerializer.Deserialize<MPlanKpiTargetApirespone>(apiResponse, options);
 
-            if (MPlanKpiTargetApirespone.data != null)
-            {
-                foreach (var item in MPlanKpiTargetApirespone.data)
+                MPlanKpiTargetApirespone = result ?? new MPlanKpiTargetApirespone();
+
+                if (MPlanKpiTargetApirespone.data != null)
                 {
-                    try
+                    foreach (var item in MPlanKpiTargetApirespone.data)
                     {
-                        var existing = await _repository.GetByIdAsync(item.Planid,item.Kpiid);
-
-                        // Map API response Target to TKpiTargets
-                        var tKpiTargets = item.Target?.Select(t => new TKpiTarget
+                        try
                         {
-                            PlanId = item.Planid,
-                            Kpiid = item.Kpiid,
-                            PeriodId = t.PeriodID,
-                            PeriodDetail = t.PeriodDetail,
-                            Sequence = t.Sequence,
-                            IsSkip = t.IsSkip,
-                            LevelId = t.Levelid,
-                            LevelDesc = t.Leveldesc,
-                            LabelStr = t.Labelstr
-                        }).ToList();
+                            var existing = await _repository.GetByIdAsync(item.Planid, item.Kpiid);
 
-                        if (existing == null)
-                        {
-                            // Create new record
-                            var newData = new MPlanKpiTarget
+                            // Map API response Target to TKpiTargets
+                            var tKpiTargets = item.Target?.Select(t => new TKpiTarget
                             {
-                                Kpiid = item.Kpiid,
                                 PlanId = item.Planid,
-                                TKpiTargets = tKpiTargets ?? new List<TKpiTarget>()
-                            };
+                                Kpiid = item.Kpiid,
+                                PeriodId = t.PeriodId,
+                                PeriodDetail = t.PeriodDetail,
+                                Sequence = t.Sequence,
+                                IsSkip = t.IsSkip,
+                                LevelId = t.LevelId,
+                                LevelDesc = t.LevelDesc,
+                                LabelStr = t.LabelStr,
+                            }).ToList();
 
-                            await _repository.AddAsync(newData);
-                            Console.WriteLine($"[INFO] Created new MPlanKpiTarget with ID {newData.PlanId}");
+                            if (existing == null)
+                            {
+                                // Create new record
+                                var newData = new MPlanKpiTarget
+                                {
+                                    KpiId = item.Kpiid,
+                                    PlanId = item.Planid,
+                                    TPlanTargetDetails = tKpiTargets?
+                                        .Select(t => new TPlanTargetDetail
+                                        {
+                                            KpiId = t.Kpiid,
+                                            PeriodId = t.PeriodId,
+                                            PeriodDetail = t.PeriodDetail,
+                                            Sequence = t.Sequence ?? 0,
+                                            IsSkip = t.IsSkip,
+                                            LevelId = t.LevelId ?? 0,
+                                            LevelDesc = t.LevelDesc,
+                                            LabelStr = t.LabelStr
+                                        }).ToList() ?? new List<TPlanTargetDetail>()
+                                };
+
+                                await _repository.AddAsync(newData);
+                                Console.WriteLine($"[INFO] Created new MPlanKpiTarget with ID {newData.PlanId}");
+                            }
+                            else
+                            {
+                                // Update existing record
+                                existing.KpiId = item.Kpiid;
+                                existing.PlanId = item.Planid;
+                                existing.TPlanTargetDetails = tKpiTargets?
+                                    .Select(t => new TPlanTargetDetail
+                                    {
+                                        KpiId = t.Kpiid,
+                                        PeriodId = t.PeriodId,
+                                        PeriodDetail = t.PeriodDetail,
+                                        Sequence = t.Sequence ?? 0,
+                                        IsSkip = t.IsSkip,
+                                        LevelId = t.LevelId ?? 0,
+                                        LevelDesc = t.LevelDesc,
+                                        LabelStr = t.LabelStr
+                                    }).ToList() ?? new List<TPlanTargetDetail>();
+
+                                await _repository.UpdateAsync(existing);
+                                Console.WriteLine($"[INFO] Updated MPlanKpiTarget with ID {existing.PlanId}");
+                            }
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            // Update existing record
-                            existing.Kpiid = item.Kpiid;
-                            existing.PlanId = item.Planid;
-                            existing.TKpiTargets = tKpiTargets ?? new List<TKpiTarget>();
-
-                            await _repository.UpdateAsync(existing);
-                            Console.WriteLine($"[INFO] Updated MPlanKpiTarget with ID {existing.PlanId}");
+                            Console.WriteLine($"[ERROR] Failed to process MPlanKpiTarget ID {item.Planid}: {ex.Message}");
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"[ERROR] Failed to process MPlanKpiTarget ID {item.Planid}: {ex.Message}");
                     }
                 }
+
+
+            }
+            catch (Exception ex) 
+            {
+                //var errorLog = new ErrorLogModels
+                //{
+                //    Message = "Function " + apiModels.ServiceNameTh + " " + ex.Message,
+                //    StackTrace = ex.StackTrace,
+                //    Source = ex.Source,
+                //    TargetSite = ex.TargetSite?.ToString(),
+                //    ErrorDate = DateTime.Now,
+                //    UserName = apiModels.Username, // ดึงจาก context หรือ session
+                //    Path = apiModels.Urlproduction,
+                //    HttpMethod = apiModels.MethodType,
+                //    RequestData = requestJson, // serialize เป็น JSON
+                //    InnerException = ex.InnerException?.ToString(),
+                //    SystemCode = Api_SysCode,
+                //    CreatedBy = "system"
+                //       ,
+                //    HttpCode = "500",
+                //};
+                //await RecErrorLogApiAsync(apiModels, errorLog);
             }
 
 
@@ -212,22 +260,22 @@ namespace SME_API_KPI.Service
         {
             return new MPlanKpiTargetApirespone
             {
-                ResponseCode = "200",
-                ResponseMsg = "OK",
+                status = 200,
+                message = "OK",
                 Timestamp = DateTime.UtcNow,
                 data = data.Select(d => new MPlanKpiTargetData
                 {
                     Planid = d.PlanId,
-                    Kpiid = d.Kpiid,
-                    Target = d.TKpiTargets?.Select(t => new MPlanKpiTargetDetail
+                    Kpiid = d.KpiId,
+                    Target = d.TPlanTargetDetails?.Select(t => new MPlanKpiTargetDetail
                     {
-                        PeriodID = t.PeriodId,
+                        PeriodId = t.PeriodId,
                         PeriodDetail = t.PeriodDetail,
-                        Sequence = t.Sequence ?? 0,
+                        Sequence = t.Sequence ,
                         IsSkip = t.IsSkip,
-                        Levelid = t.LevelId ?? 0,
-                        Leveldesc = t.LevelDesc,
-                        Labelstr = t.LabelStr
+                        LevelId = t.LevelId,
+                        LevelDesc = t.LevelDesc,
+                        LabelStr = t.LabelStr
                     }).ToList() ?? new List<MPlanKpiTargetDetail>()
                 }).ToList()
             };

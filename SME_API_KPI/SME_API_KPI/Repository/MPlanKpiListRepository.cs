@@ -25,7 +25,7 @@ namespace SME_API_KPI.Repository
             }
         }
 
-        public async Task<MPlanKpiList?> GetByIdAsync(int? xplanid,int? xyear,string xname,string xplantypeid)
+        public async Task<MPlanKpiList?> GetByIdAsync(string? xplanid,int? xyear,string xname,string xplantypeid)
         {
             try
             {

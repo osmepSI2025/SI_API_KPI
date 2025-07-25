@@ -2,29 +2,27 @@
 {
     public class MPlanKpiAssignApirespone
     {
-        public string ResponseCode { get; set; }
-        public string ResponseMsg { get; set; }
-        public List<MPlanKpiAssignModels> data { get; set; }
-        public DateTime Timestamp { get; set; }
+        public int status { get; set; }
+        public string message { get; set; }
+        public MPlanKpiAssignData? data { get; set; }
     }
 
-    public class MPlanKpiAssignModels
+    public class MPlanKpiAssignData
     {
-        public int Planid { get; set; }
-
-        public int Kpiid { get; set; }
-
-        public string? Code { get; set; }
-
-        public string? Description { get; set; }
-
-
+        public string kpiid { get; set; }
+        public string kpiname { get; set; }
+        public decimal weight { get; set; }
+        public List<MPlanKpiAssignDivision> divisionname { get; set; }
     }
+
+    public class MPlanKpiAssignDivision
+    {
+        public string divisionname { get; set; }
+    }
+
     public class searchMPlanKpiAssignModels
     {
-        public int Planid { get; set; }
-
-        public int? Kpiid { get; set; }
-
+        public string? kpiid { get; set; }
+        public string? planid { get; set; }
     }
 }

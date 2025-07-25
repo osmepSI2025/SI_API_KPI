@@ -5,9 +5,13 @@ namespace SME_API_KPI.Entities;
 
 public partial class MPlanKpiTarget
 {
-    public int PlanId { get; set; }
+    public int Id { get; set; }
 
-    public int Kpiid { get; set; }
+    public string PlanId { get; set; } = null!;
 
-    public virtual ICollection<TKpiTarget> TKpiTargets { get; set; } = new List<TKpiTarget>();
+    public string KpiId { get; set; } = null!;
+
+    public string? KpiName { get; set; }
+
+    public virtual ICollection<TPlanTargetDetail> TPlanTargetDetails { get; set; } = new List<TPlanTargetDetail>();
 }

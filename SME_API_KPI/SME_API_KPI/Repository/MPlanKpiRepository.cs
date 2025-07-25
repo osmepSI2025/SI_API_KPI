@@ -86,7 +86,7 @@ namespace SME_API_KPI.Repository
             {
                 var query = _context.MPlanKpis
                     .Include(x => x.TPlanKpilists)
-                    .ThenInclude(y => y.TPlanKpidivisions)
+                    //.ThenInclude(y => y.TPlanKpidivisions)
                     .AsQueryable();
 
                 if (searchModel.Planid != 0)
@@ -104,36 +104,7 @@ namespace SME_API_KPI.Repository
         }
 
 
-        //public async Task<IEnumerable<MPlanKpi>> GetAllAsyncSearch_MPlanKpi(searchMPlanKpiModels searchModel)
-        //{
-        //    try
-        //    {
-        //        var query = _context.MPlanKpis
-        //            .Include(x => x.TPlanKpilists)
-        //           // .Include(x => x) // Eagerly load TKpiTargets
-        //                                         // Eagerly load TKpiTargets
-        //            .AsQueryable();
-
-        //        if (searchModel.Planid != 0)
-        //        {
-        //            query = query.Where(bu => bu.PlanId == searchModel.Planid);
-        //        }
-
-
-        //        // Pagination (uncomment if needed)
-        //        // if (searchModel.page != 0 && searchModel.pageSize != 0)
-        //        // {
-        //        //     int skip = (searchModel.page - 1) * searchModel.pageSize;
-        //        //     query = query.Skip(skip).Take(searchModel.pageSize);
-        //        // }
-
-        //        return await query.ToListAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return null;
-        //    }
-        //}
+       
 
     }
 }

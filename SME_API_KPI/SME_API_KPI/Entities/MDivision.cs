@@ -5,7 +5,9 @@ namespace SME_API_KPI.Entities;
 
 public partial class MDivision
 {
-    public int Divisionid { get; set; }
+    public int Id { get; set; }
+
+    public string? Divisionid { get; set; }
 
     public string? Divisioncode { get; set; }
 

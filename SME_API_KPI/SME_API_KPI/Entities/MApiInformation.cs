@@ -11,6 +11,8 @@ public partial class MApiInformation
 
     public string? ServiceNameCode { get; set; }
 
+    public string? MethodType { get; set; }
+
     public string? Urlproduction { get; set; }
 
     public string? Urldevelopment { get; set; }
@@ -28,8 +30,6 @@ public partial class MApiInformation
     public string? AccessToken { get; set; }
 
     public string? ContentType { get; set; }
-
-    public string? MethodType { get; set; }
 
     public DateTime? CreateDate { get; set; }
 

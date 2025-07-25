@@ -25,11 +25,11 @@ namespace SME_API_KPI.Repository
             }
         }
 
-        public async Task<MPlanPeriod?> GetByIdAsync(int xyear,string xplanId,string xuserId)
+        public async Task<MPlanPeriod?> GetByIdAsync(int? xyear,string xplanTypeId)
         {
             try
             {
-                return await _context.MPlanPeriods.FirstOrDefaultAsync(e => e.PlanYear == xyear && e.Planid == xplanId && e.Userid == xuserId);
+                return await _context.MPlanPeriods.FirstOrDefaultAsync(e => e.Year == xyear && e.PlanTypeId == xplanTypeId);
               //  return await _context.MPlanPeriods.FindAsync(id);
             }
             catch
@@ -85,7 +85,9 @@ namespace SME_API_KPI.Repository
         {
             try
             {
-                var query = _context.MPlanPeriods.AsQueryable();
+                var query = _context.MPlanPeriods
+                    .Include(x => x.TPlanPeriodDetails)
+                    .AsQueryable();
 
 
 
@@ -98,12 +100,12 @@ namespace SME_API_KPI.Repository
                 if (searchModel.PlanYear != 0 && searchModel.PlanYear != 0)
                 {
                     query = query.Where(bu =>
-                            bu.PlanYear == searchModel.PlanYear);
+                            bu.Year == searchModel.PlanYear);
                 }
-                if (searchModel.PeriodId != 0 && searchModel.PeriodId != 0)
+
+                if (searchModel.PeriodId != null)
                 {
-                    query = query.Where(bu =>
-                            bu.PeriodId == searchModel.PeriodId);
+                    query = query.Where(bu => bu.TPlanPeriodDetails.Any(p => p.PeriodId == searchModel.PeriodId));
                 }
                 //// Apply pagination
                 //if (searchModel.page != 0 && searchModel.pageSize != 0)

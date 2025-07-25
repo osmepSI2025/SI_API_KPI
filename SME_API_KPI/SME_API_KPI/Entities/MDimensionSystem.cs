@@ -8,4 +8,6 @@ public partial class MDimensionSystem
     public int Dimensionid { get; set; }
 
     public string? Dimensionname { get; set; }
+
+    public string? Plantypeid { get; set; }
 }

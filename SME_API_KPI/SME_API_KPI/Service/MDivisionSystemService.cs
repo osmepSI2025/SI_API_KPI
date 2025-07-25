@@ -33,7 +33,7 @@ namespace SME_API_KPI.Service
             }
         }
 
-        public async Task<MDivision?> GetByIdAsync(int id)
+        public async Task<MDivision?> GetByIdAsync(string id)
         {
             try
             {

@@ -7,9 +7,9 @@ public partial class TKpiTarget
 {
     public int Id { get; set; }
 
-    public int PlanId { get; set; }
+    public string PlanId { get; set; } = null!;
 
-    public int Kpiid { get; set; }
+    public string Kpiid { get; set; } = null!;
 
     public int PeriodId { get; set; }
 
@@ -24,6 +24,4 @@ public partial class TKpiTarget
     public string? LevelDesc { get; set; }
 
     public string? LabelStr { get; set; }
-
-    public virtual MPlanKpiTarget MPlanKpiTarget { get; set; } = null!;
 }

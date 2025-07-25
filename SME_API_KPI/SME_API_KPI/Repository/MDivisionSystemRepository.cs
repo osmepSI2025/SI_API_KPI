@@ -24,11 +24,11 @@ namespace SME_API_KPI.Repository
             }
         }
 
-        public async Task<MDivision?> GetByIdAsync(int id)
+        public async Task<MDivision?> GetByIdAsync(string id)
         {
             try
             {
-                return await _context.MDivisions.FindAsync(id);
+                return await _context.MDivisions.FirstOrDefaultAsync(x => x.Divisionid == id);
             }
             catch
             {

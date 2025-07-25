@@ -25,11 +25,11 @@ namespace SME_API_KPI.Repository
             }
         }
 
-        public async Task<MPlanKpiDescription?> GetByIdAsync(int id)
+        public async Task<MPlanKpiDescription?> GetByIdAsync(string id,string kpiid)
         {
             try
             {
-                return await _context.MPlanKpiDescriptions.FirstOrDefaultAsync(e=>e.Planid == id);
+                return await _context.MPlanKpiDescriptions.FirstOrDefaultAsync(e=>e.Planid == id && e.Kpiid ==kpiid);
             }
             catch
             {
@@ -88,13 +88,13 @@ namespace SME_API_KPI.Repository
 
 
 
-                if (searchModel.Planid != 0 && searchModel.Planid != 0)
+                if (searchModel.Planid != "" && searchModel.Planid != null)
                 {
                     query = query.Where(bu =>
                         bu.Planid == searchModel.Planid
                     );
                 }
-                if (searchModel.Kpiid != 0 && searchModel.Kpiid != 0)
+                if (searchModel.Kpiid != "" && searchModel.Kpiid != null)
                 {
                     query = query.Where(bu =>
                             bu.Kpiid == searchModel.Kpiid);

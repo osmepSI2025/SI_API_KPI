@@ -2,25 +2,25 @@
 {
     public class MPlanTargetDescriptionApirespone
     {
-        public string ResponseCode { get; set; }
-        public string ResponseMsg { get; set; }
-        public List<MPlanTargetDescriptionModels> data { get; set; }
-        public DateTime Timestamp { get; set; }
+        public int status { get; set; }
+        public string message { get; set; }
+        public MPlanTargetDescriptionModels data { get; set; }
+       // public DateTime Timestamp { get; set; }
     }
 
     public class MPlanTargetDescriptionModels
     {
-        public int? Planid { get; set; }
+        public string? Planid { get; set; }
 
-        public int? Kpiid { get; set; }
+        public string? Kpiid { get; set; }
 
         public string? Target { get; set; }
     }
     public class searchMPlanTargetDescriptionModels
     {
-        public int Planid { get; set; }
+        public string Planid { get; set; }
 
-        public int? Kpiid { get; set; }
+        public string? Kpiid { get; set; }
 
     }
 }

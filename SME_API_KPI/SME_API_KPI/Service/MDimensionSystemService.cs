@@ -129,6 +129,7 @@ namespace SME_API_KPI.Service
                             {
                                 Dimensionname = item.Dimensionname,
                                 Dimensionid = item.Dimensionid,
+                                 Plantypeid = item.Plantypeid,
                             };
 
                             await _repository.AddAsync(newData);
@@ -141,6 +142,7 @@ namespace SME_API_KPI.Service
 
                             existing.Dimensionname = item.Dimensionname;
                             existing.Dimensionid = item.Dimensionid;
+                            existing.Plantypeid = item.Plantypeid;
 
                             await _repository.UpdateAsync(existing);
                             Console.WriteLine($"[INFO] Updated MDimensionSystem with ID {existing.Dimensionid}");
@@ -186,7 +188,10 @@ namespace SME_API_KPI.Service
                         var models2 = Ldata2.Select(r => new MDimensionSystemModels
                         {
                             Dimensionid = r.Dimensionid,
-                            Dimensionname = r.Dimensionname
+                            Dimensionname = r.Dimensionname,
+                             Plantypeid = r.Plantypeid
+
+
                         }).ToList();
 
                         // Wrap in a single response object
@@ -209,6 +214,7 @@ namespace SME_API_KPI.Service
                     {
                         Dimensionid = r.Dimensionid,
                         Dimensionname = r.Dimensionname
+                        , Plantypeid = r.Plantypeid
                     }).ToList();
 
                     // Wrap in a single response object

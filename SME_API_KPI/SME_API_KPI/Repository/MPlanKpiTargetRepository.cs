@@ -17,7 +17,9 @@ namespace SME_API_KPI.Repository
         {
             try
             {
-                return await _context.MPlanKpiTargets.ToListAsync();
+                return await _context.MPlanKpiTargets
+                    .Include(x => x.TPlanTargetDetails) // Eagerly load TKpiTargets
+                    .ToListAsync();
             }
             catch
             {
@@ -25,11 +27,11 @@ namespace SME_API_KPI.Repository
             }
         }
 
-        public async Task<MPlanKpiTarget?> GetByIdAsync(int? xplanId,int? xkpiid)
+        public async Task<MPlanKpiTarget?> GetByIdAsync(string? xplanId,string? xkpiid)
         {
             try
             {
-                return await _context.MPlanKpiTargets.FirstOrDefaultAsync(e=>e.PlanId == xplanId && e.Kpiid == xkpiid);
+                return await _context.MPlanKpiTargets.FirstOrDefaultAsync(e=>e.PlanId == xplanId && e.KpiId == xkpiid);
             }
             catch
             {
@@ -85,16 +87,16 @@ namespace SME_API_KPI.Repository
             try
             {
                 var query = _context.MPlanKpiTargets
-                    .Include(x => x.TKpiTargets) // Eagerly load TKpiTargets
+                    .Include(x => x.TPlanTargetDetails) // Eagerly load TKpiTargets
                     .AsQueryable();
 
-                if (searchModel.Planid != 0)
+                if (searchModel.Planid != null && searchModel.Kpiid != "")
                 {
                     query = query.Where(bu => bu.PlanId == searchModel.Planid);
                 }
-                if (searchModel.Kpiid != null && searchModel.Kpiid != 0)
+                if (searchModel.Kpiid != null && searchModel.Kpiid != "")
                 {
-                    query = query.Where(bu => bu.Kpiid == searchModel.Kpiid);
+                    query = query.Where(bu => bu.KpiId == searchModel.Kpiid);
                 }
 
                 // Pagination (uncomment if needed)

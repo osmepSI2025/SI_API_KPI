@@ -42,27 +42,31 @@ builder.Services.AddScoped<MDivisionRepository>();
 builder.Services.AddScoped<MDivisionService>();
 builder.Services.AddScoped<MPlanPeriodRepository>();
 builder.Services.AddScoped<MPlanPeriodService>();
+
 builder.Services.AddScoped<MPlanTargetDescriptionRepository>();
 builder.Services.AddScoped<MPlanTargetDescriptionService>();
 builder.Services.AddScoped<MPlanKpiDescriptionService>();
 builder.Services.AddScoped<MPlanKpiDescriptionRepository>();
-builder.Services.AddScoped<MPlanKpiAssignService>();
-builder.Services.AddScoped<MPlanKpiAssignRepository>();
+
 builder.Services.AddScoped<MPlanweightService>();
 builder.Services.AddScoped<MPlanweightRepository>();
 builder.Services.AddScoped<MPlanResultService>();
 builder.Services.AddScoped<MPlanResultRepository>();
 builder.Services.AddScoped<MPlanKpiListRepository>();
 builder.Services.AddScoped<MPlanKpiListService>();
- builder.Services.AddScoped<MPlanKpiService>();
-builder.Services.AddScoped<MPlanKpiRepository>();
 
-builder.Services.AddScoped<MPlanKpiTargetRepository>();
-builder.Services.AddScoped<MPlanKpiTargetService>();
+// builder.Services.AddScoped<MPlanKpiService>();
+//builder.Services.AddScoped<MPlanKpiRepository>();
 
 
+builder.Services.AddScoped<MExportEvalSystemRepository>();
+builder.Services.AddScoped<MExportEvalSystemService>();
 
+builder.Services.AddScoped<MKpiSystemKpiTargetService>();
+builder.Services.AddScoped<MKpiSystemKpiTargetRepository>();
 
+builder.Services.AddScoped<MKpiSystemAssignService>();
+builder.Services.AddScoped<MKpiSystemAssignRepository>();
 
 
 builder.Services.AddScoped<IApiInformationRepository, ApiInformationRepository>();

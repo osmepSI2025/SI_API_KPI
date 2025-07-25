@@ -74,10 +74,10 @@ public class JobSchedulerService : BackgroundService
             case "GetKpiTarget":
                 var mkpit = new searchMPlanKpiTargetModels
                 {
-                    Planid = 0,
-                    Kpiid = 0
+                    Planid = "",
+                    Kpiid = ""
                 };
-                await serviceProvider.GetRequiredService<MPlanKpiTargetService>().BatchEndOfDay_MPlanKpiTarget(mkpit);
+            //    await serviceProvider.GetRequiredService<MPlanKpiTargetService>().BatchEndOfDay_MPlanKpiTarget(mkpit);
                 break;
             case "GetKPI":
                 var mkpi = new searchMPlanKpiModels
@@ -85,33 +85,33 @@ public class JobSchedulerService : BackgroundService
                     Planid = 0,
                      dimensionid = 0
                 };
-                await serviceProvider.GetRequiredService<MPlanKpiService>().BatchEndOfDay_MPlanKpi(mkpi);
+                //await serviceProvider.GetRequiredService<MPlanKpiService>().BatchEndOfDay_MPlanKpi(mkpi);
                 break;
             case "getPeriod":
                 var mpp = new searchMPlanPeriodModels
                 {
                     PlanYear = 0,
                     PlanTypeId = "",
-                    PeriodId = 0
+                    PeriodId = null
                 };
 
-                await serviceProvider.GetRequiredService<MPlanPeriodService>().BatchEndOfDay_MPlanPeriod(mpp);
+            //    await serviceProvider.GetRequiredService<MPlanPeriodService>().BatchEndOfDay_MPlanPeriod(mpp);
                 break;
-            case "gettargetdescription":
-                var mptd = new searchMPlanTargetDescriptionModels
-                {
-                    Planid = 0,
-                    Kpiid = 0
-                };
+            //case "gettargetdescription":
+            //    var mptd = new searchMPlanTargetDescriptionModels
+            //    {
+            //        Planid = "",
+            //        Kpiid = ""
+            //    };
 
-                await serviceProvider.GetRequiredService<MPlanTargetDescriptionService>().BatchEndOfDay_MPlanTargetDescription(mptd);
-                break;
+            //    await serviceProvider.GetRequiredService<MPlanTargetDescriptionService>().BatchEndOfDay_MPlanTargetDescription(mptd);
+            //    break;
 
             case "getkpidescription":
                 var mpkd = new searchMPlanKpiDescriptionModels
                 {
-                    Planid = 0,
-                    Kpiid = 0
+                    Planid = "",
+                    Kpiid = ""
                 };
 
                 await serviceProvider.GetRequiredService<MPlanKpiDescriptionService>().BatchEndOfDay_MPlanKpiDescription(mpkd);
@@ -120,8 +120,8 @@ public class JobSchedulerService : BackgroundService
             case "GetKpiAssign":
                 var mpa = new searchMPlanKpiDescriptionModels
                 {
-                    Planid = 0,
-                    Kpiid = 0
+                    Planid = "",
+                    Kpiid = ""
                 };
 
                 await serviceProvider.GetRequiredService<MPlanKpiDescriptionService>().BatchEndOfDay_MPlanKpiDescription(mpa);
@@ -135,6 +135,15 @@ public class JobSchedulerService : BackgroundService
                 };
 
                 await serviceProvider.GetRequiredService<MPlanweightService>().BatchEndOfDay_MPlanweight(mw);
+                break;
+            case "exportEval":
+                var mwexportEval = new searchMExportEvalModels
+                {
+                     periodId = 0,
+                     planID = ""
+                };
+
+                await serviceProvider.GetRequiredService<MExportEvalSystemService>().BatchEndOfDay_MExportEval(mwexportEval);
                 break;
             default:
                 // Optionally log unknown job

@@ -3,6 +3,7 @@ using SME_API_KPI.Models;
 using SME_API_KPI.Repository;
 using SME_API_KPI.Services;
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SME_API_KPI.Service
 {
@@ -33,11 +34,11 @@ namespace SME_API_KPI.Service
             }
         }
 
-        public async Task<MPlanTargetDescription?> GetByIdAsync(int id)
+        public async Task<MPlanTargetDescription?> GetByIdAsync(string  planId,string kpiid)
         {
             try
             {
-                return await _repository.GetByIdAsync(id);
+                return await _repository.GetByIdAsync(planId,kpiid);
             }
             catch
             {
@@ -108,28 +109,27 @@ namespace SME_API_KPI.Service
                 AccessToken = x.AccessToken
 
             }).FirstOrDefault(); // Use FirstOrDefault to handle empty lists
+            try {
+                var apiResponse = await _serviceApi.GetDataTargetAndKpiDesApiAsync(apiParam, xmodel.Planid,xmodel.Kpiid);
+                var result = JsonSerializer.Deserialize<MPlanTargetDescriptionApirespone>(apiResponse, options);
 
-            var apiResponse = await _serviceApi.GetDataApiAsync(apiParam, xmodel);
-            var result = JsonSerializer.Deserialize<MPlanTargetDescriptionApirespone>(apiResponse, options);
+                MPlanTargetDescriptionApirespone = result ?? new MPlanTargetDescriptionApirespone();
 
-            MPlanTargetDescriptionApirespone = result ?? new MPlanTargetDescriptionApirespone();
-
-            if (MPlanTargetDescriptionApirespone.data != null)
-            {
-                foreach (var item in MPlanTargetDescriptionApirespone.data)
+                if (MPlanTargetDescriptionApirespone.data != null)
                 {
                     try
                     {
-                        var existing = await _repository.GetByIdAsync(item.Planid);
+                        var existing = await _repository.GetByIdAsync(MPlanTargetDescriptionApirespone.data.Planid, MPlanTargetDescriptionApirespone.data.Kpiid);
 
                         if (existing == null)
                         {
                             // Create new record
                             var newData = new MPlanTargetDescription
                             {
-                                Kpiid = item.Kpiid,
-                                Planid = item.Planid,
-                               Target  = item.Target,                           };
+                                Kpiid = MPlanTargetDescriptionApirespone.data.Kpiid,
+                                Planid = MPlanTargetDescriptionApirespone.data.Planid,
+                                Target = MPlanTargetDescriptionApirespone.data.Target,
+                            };
 
                             await _repository.AddAsync(newData);
                             Console.WriteLine($"[INFO] Created new MPlanTargetDescription with ID {newData.Planid}");
@@ -139,9 +139,9 @@ namespace SME_API_KPI.Service
                             // Update existing record
 
 
-                            existing.Kpiid = item.Kpiid;
-                            existing.Planid = item.Planid;
-                            existing.Target = item.Target;
+                            existing.Kpiid = MPlanTargetDescriptionApirespone.data.Kpiid;
+                            existing.Planid = MPlanTargetDescriptionApirespone.data.Planid;
+                            existing.Target = MPlanTargetDescriptionApirespone.data.Target;
 
                             await _repository.UpdateAsync(existing);
                             Console.WriteLine($"[INFO] Updated MPlanTargetDescription with ID {existing.Planid}");
@@ -149,10 +149,17 @@ namespace SME_API_KPI.Service
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"[ERROR] Failed to process MPlanTargetDescription ID {item.Planid}: {ex.Message}");
+                        Console.WriteLine($"[ERROR] Failed to process MPlanTargetDescription ID {MPlanTargetDescriptionApirespone.data.Planid}: {ex.Message}");
                     }
+                 
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Failed to retrieve API information: {ex.Message}");
+                return;
+            }
+      
 
 
 
@@ -173,44 +180,44 @@ namespace SME_API_KPI.Service
                     {
                         return new MPlanTargetDescriptionApirespone
                         {
-                             ResponseCode = "200",
-                            ResponseMsg = "No data found",
-                            Timestamp = DateTime.UtcNow,
-                            data = new List<MPlanTargetDescriptionModels>()
+                             status = 200,
+                            message = "No data found",
+                           // Timestamp = DateTime.UtcNow,
+                            data = new MPlanTargetDescriptionModels()
                         };
                     }
                     else
                     {
-                        var models2 = Ldata2.Select(r => new MPlanTargetDescriptionModels
+                        var models2 = new MPlanTargetDescriptionModels
                         {
-                            Planid = r.Planid,
-                            Target = r.Target,
-                            Kpiid = r.Kpiid,
-                        }).ToList();
+                            Planid = Ldata2.ToList()[0].Planid,
+                            Target = Ldata2.ToList()[0].Target,
+                            Kpiid = Ldata2.ToList()[0].Kpiid,
+                        };
 
                         return new MPlanTargetDescriptionApirespone
                         {
-                            ResponseCode = "200",
-                            ResponseMsg = "OK",
-                            Timestamp = DateTime.UtcNow,
+                            status =200,
+                            message = "OK",
+                          //  Timestamp = DateTime.UtcNow,
                             data = models2
                         };
                     }
                 }
                 else
                 {
-                    var models = Ldata.Select(r => new MPlanTargetDescriptionModels
+               
+                    var models = new MPlanTargetDescriptionModels
                     {
-                        Planid = r.Planid,
-                        Target = r.Target,
-                        Kpiid = r.Kpiid,
-                    }).ToList();
-
+                        Planid = Ldata.ToList()[0].Planid,
+                        Target = Ldata.ToList()[0].Target,
+                        Kpiid = Ldata.ToList()[0].Kpiid,
+                    };
                     return new MPlanTargetDescriptionApirespone
                     {
-                        ResponseCode = "200",
-                        ResponseMsg = "OK",
-                        Timestamp = DateTime.UtcNow,
+                        status = 200,
+                        message = "OK",
+                      //  Timestamp = DateTime.UtcNow,
                         data = models
                     };
                 }
@@ -220,10 +227,10 @@ namespace SME_API_KPI.Service
                 Console.WriteLine($"[ERROR] Failed to search MPlanTargetDescription: {ex.Message}");
                 return new MPlanTargetDescriptionApirespone
                 {
-                    ResponseCode = "500",
-                    ResponseMsg = "Internal Server Error",
-                    Timestamp = DateTime.UtcNow,
-                    data = new List<MPlanTargetDescriptionModels>()
+                    status = 500,
+                    message = "Internal Server Error",
+                 //   Timestamp = DateTime.UtcNow,
+                    data = new MPlanTargetDescriptionModels()
                 };
             }
         }

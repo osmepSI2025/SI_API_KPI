@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using SME_API_KPI.Entities;
 using SME_API_KPI.Models;
 using SME_API_KPI.Repository;
@@ -33,11 +34,11 @@ namespace SME_API_KPI.Service
             }
         }
 
-        public async Task<MPlanKpiDescription?> GetByIdAsync(int id)
+        public async Task<MPlanKpiDescription?> GetByIdAsync(string id,string kpiid)
         {
             try
             {
-                return await _repository.GetByIdAsync(id);
+                return await _repository.GetByIdAsync(id, kpiid);
             }
             catch
             {
@@ -109,49 +110,48 @@ namespace SME_API_KPI.Service
 
             }).FirstOrDefault(); // Use FirstOrDefault to handle empty lists
 
-            var apiResponse = await _serviceApi.GetDataApiAsync(apiParam, xmodel);
+            var apiResponse = await _serviceApi.GetDataTargetAndKpiDesApiAsync(apiParam, xmodel.Planid,xmodel.Kpiid);
             var result = JsonSerializer.Deserialize<MPlanKpiDescriptionApirespone>(apiResponse, options);
 
             MPlanKpiDescriptionApirespone = result ?? new MPlanKpiDescriptionApirespone();
 
             if (MPlanKpiDescriptionApirespone.data != null)
             {
-                foreach (var item in MPlanKpiDescriptionApirespone.data)
+                try
                 {
-                    try
+                    var existing = await _repository.GetByIdAsync(MPlanKpiDescriptionApirespone.data.Planid, MPlanKpiDescriptionApirespone.data.Kpiid);
+
+                    if (existing == null)
                     {
-                        var existing = await _repository.GetByIdAsync(item.Planid);
-
-                        if (existing == null)
+                        // Create new record
+                        var newData = new MPlanKpiDescription
                         {
-                            // Create new record
-                            var newData = new MPlanKpiDescription
-                            {
-                                Kpiid = item.Kpiid,
-                                Planid = item.Planid,
-                                                };
+                            Kpiid = MPlanKpiDescriptionApirespone.data.Kpiid,
+                            Planid = MPlanKpiDescriptionApirespone.data.Planid,
+                            Kpidescription = MPlanKpiDescriptionApirespone.data.Kpidescription,
+                        };
 
-                            await _repository.AddAsync(newData);
-                            Console.WriteLine($"[INFO] Created new MPlanKpiDescription with ID {newData.Planid}");
-                        }
-                        else
-                        {
-                            // Update existing record
-
-
-                            existing.Kpiid = item.Kpiid;
-                            existing.Planid = item.Planid;
-                        
-
-                            await _repository.UpdateAsync(existing);
-                            Console.WriteLine($"[INFO] Updated MPlanKpiDescription with ID {existing.Planid}");
-                        }
+                        await _repository.AddAsync(newData);
+                        Console.WriteLine($"[INFO] Created new MPlanKpiDescription with ID {newData.Planid}");
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        Console.WriteLine($"[ERROR] Failed to process MPlanKpiDescription ID {item.Planid}: {ex.Message}");
+                        // Update existing record
+
+
+                        existing.Kpiid = MPlanKpiDescriptionApirespone.data.Kpiid;
+                        existing.Planid = MPlanKpiDescriptionApirespone.data.Planid;
+                        existing.Kpidescription = MPlanKpiDescriptionApirespone.data.Kpidescription;
+
+                        await _repository.UpdateAsync(existing);
+                        Console.WriteLine($"[INFO] Updated MPlanKpiDescription with ID {existing.Planid}");
                     }
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] Failed to process MPlanKpiDescription ID {MPlanKpiDescriptionApirespone.data.Planid}: {ex.Message}");
+                }
+               
             }
 
 
@@ -173,43 +173,44 @@ namespace SME_API_KPI.Service
                     {
                         return new MPlanKpiDescriptionApirespone
                         {
-                             ResponseCode = "200",
-                            ResponseMsg = "No data found",
-                            Timestamp = DateTime.UtcNow,
-                            data = new List<MPlanKpiDescriptionModels>()
+                             status =200,
+                            message = "No data found",
+                           
+                            data = new MPlanKpiDescriptionModels()
                         };
                     }
                     else
                     {
-                        var models2 = Ldata2.Select(r => new MPlanKpiDescriptionModels
+                        var models2 = new MPlanKpiDescriptionModels
                         {
-                            Planid = r.Planid,
-                            Kpiid = r.Kpiid,
-                        }).ToList();
+                            Planid = Ldata2.ToList()[0].Planid,
+                            Kpiid = Ldata2.ToList()[0].Kpiid,
+                            Kpidescription = Ldata2.ToList()[0].Kpidescription,
+                        };
 
                         return new MPlanKpiDescriptionApirespone
                         {
-                            ResponseCode = "200",
-                            ResponseMsg = "OK",
-                            Timestamp = DateTime.UtcNow,
+                            status = 200,
+                            message = "OK",
+                         
                             data = models2
                         };
                     }
                 }
                 else
                 {
-                    var models = Ldata.Select(r => new MPlanKpiDescriptionModels
+                    var models = new MPlanKpiDescriptionModels
                     {
-                        Planid = r.Planid,
-                        Kpiid = r.Kpiid,
-                        Kpidescription = r.Kpidescription
-                    }).ToList();
+                        Planid = Ldata.ToList()[0].Planid,
+                        Kpiid = Ldata.ToList()[0].Kpiid,
+                        Kpidescription = Ldata.ToList()[0].Kpidescription
+                    };
 
                     return new MPlanKpiDescriptionApirespone
                     {
-                        ResponseCode = "200",
-                        ResponseMsg = "OK",
-                        Timestamp = DateTime.UtcNow,
+                        status = 200,
+                        message = "OK",
+                     
                         data = models
                     };
                 }
@@ -219,10 +220,10 @@ namespace SME_API_KPI.Service
                 Console.WriteLine($"[ERROR] Failed to search MPlanKpiDescription: {ex.Message}");
                 return new MPlanKpiDescriptionApirespone
                 {
-                    ResponseCode = "500",
-                    ResponseMsg = "Internal Server Error",
-                    Timestamp = DateTime.UtcNow,
-                    data = new List<MPlanKpiDescriptionModels>()
+                    status = 500,
+                    message = "Internal Server Error",
+                   
+                    data = new MPlanKpiDescriptionModels()
                 };
             }
         }

@@ -110,7 +110,7 @@ namespace SME_API_KPI.Service
 
             }).FirstOrDefault(); // Use FirstOrDefault to handle empty lists
 
-            var apiResponse = await _serviceApi.GetDataApiAsync(apiParam, xmodels);
+            var apiResponse = await _serviceApi.GetDataPlanPeroidApiAsync(apiParam, xmodels.PlanYear, xmodels.PlanTypeId, xmodels.PeriodId);
             var result = JsonSerializer.Deserialize<MPlanPeriodApirespone>(apiResponse, options);
 
             MPlanPeriodApirespone = result ?? new MPlanPeriodApirespone();
@@ -120,46 +120,53 @@ namespace SME_API_KPI.Service
                 {
                     try
                     {
-                        var existing = await _repository.GetByIdAsync(item.Year,item.Planid,item.Userid);
+                        var existing = await _repository.GetByIdAsync(item.year, item.planid);
 
                         if (existing == null)
                         {
                             // Create new record
                             var newData = new MPlanPeriod
                             {
-                                PeriodId = xmodels.PeriodId,
-                                PlanYear = item.Year,
-                                PlanTypeId = xmodels.PlanTypeId,
-                                Planid = item.Planid,
-                                Startdate = item.Startdate,
-                                Enddate = item.Enddate,
-                                Userid = item.Userid,
-                                Period = item.Period,
-
+                                Year = item.year,
+                                PlanTypeId = item.planTypeid,
+                                PlanId = item.planid,
+                                EffectiveDate = item.effectivedate,
+                                EndDate = item.enddate,
+                                TPlanPeriodDetails = item.period?.Select(p => new TPlanPeriodDetail
+                                {
+                                    PeriodId = p.periodId,
+                                    EffectiveDate = p.effectiveDate,
+                                    EndDate = p.endDate,
+                                    PlanId = item.planid
+                                }).ToList() ?? new List<TPlanPeriodDetail>()
                             };
 
                             await _repository.AddAsync(newData);
-                            Console.WriteLine($"[INFO] Created new MPlanPeriod with ID {newData.Planid}");
+                            Console.WriteLine($"[INFO] Created new MPlanPeriod with ID {newData.PlanId}");
                         }
                         else
                         {
                             // Update existing record
+                            existing.Year = item.year;
+                            existing.PlanTypeId = item.planTypeid;
+                            existing.PlanId = item.planid;
+                            existing.EffectiveDate = item.effectivedate;
+                            existing.EndDate = item.enddate;
+                            existing.TPlanPeriodDetails = item.period?.Select(p => new TPlanPeriodDetail
+                            {
+                                PeriodId = p.periodId,
+                                EffectiveDate = p.effectiveDate,
+                                EndDate = p.endDate,
+                                PlanId = item.planid
+                            }).ToList() ?? new List<TPlanPeriodDetail>();
 
-                            existing.PeriodId = xmodels.PeriodId;
-                            existing.PlanYear = item.Year;
-                            existing.PlanTypeId = xmodels.PlanTypeId;
-                            existing.Planid = item.Planid;
-                            existing.Startdate = item.Startdate;
-                            existing.Enddate = item.Enddate;
-                            existing.Userid = item.Userid;
-                            existing.Period = item.Period;
                             await _repository.UpdateAsync(existing);
-                            Console.WriteLine($"[INFO] Updated MPlanPeriod with ID {existing.Planid}");
+                            Console.WriteLine($"[INFO] Updated MPlanPeriod with ID {existing.PlanId}");
                         }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"[ERROR] Failed to process MPlanPeriod ID {item.Planid}: {ex.Message}");
+                        Console.WriteLine($"[ERROR] Failed to process MPlanPeriod ID {item.planid}: {ex.Message}");
                     }
                 }
             }
@@ -171,7 +178,6 @@ namespace SME_API_KPI.Service
         {
             try
             {
-                // Get data from repository
                 var Ldata = await _repository.GetAllAsyncSearch_MPlanPeriod(xmodels);
 
                 if (Ldata == null || !Ldata.Any())
@@ -183,60 +189,62 @@ namespace SME_API_KPI.Service
                     {
                         return new MPlanPeriodApirespone
                         {
-                             ResponseCode = "200",
-                            ResponseMsg = "No data found",
+                            status = 200,
+                            message = "No data found",
                             Timestamp = DateTime.UtcNow,
-                            data = new List<MPlanPeriodModels>()
+                            data = new List<MPlanPeriodData>()
                         };
                     }
                     else
                     {
-                        var models2 = Ldata2.Select(r => new MPlanPeriodModels
+                        var models2 = Ldata2.Select(r => new MPlanPeriodData
                         {
-                            Fullname = r.Fullname,
-                            Planid = r.Planid,
-                            PlanTypeId = r.PlanTypeId,
-                            Startdate = r.Startdate,
-                            Enddate = r.Enddate,
-                            Userid = r.Userid,
-                            Period = r.Period,
-                            Year = r.PlanYear,
+                            year = r.Year,
+                            planid = r.PlanId,
+                            planTypeid = r.PlanTypeId,
+                            effectivedate = r.EffectiveDate,
+                            enddate = r.EndDate,
+                            period = r.TPlanPeriodDetails?.Select(p => new MPlanPeriodDetail
+                            {
+                                periodId = p.PeriodId,
+                                effectiveDate = p.EffectiveDate,
+                                endDate = p.EndDate
+                            }).ToList() ?? new List<MPlanPeriodDetail>()
                         }).ToList();
 
-                        var response = new MPlanPeriodApirespone
+                        return new MPlanPeriodApirespone
                         {
-                            ResponseCode = "200",
-                            ResponseMsg = "OK",
+                            status = 200,
+                            message = "OK",
                             Timestamp = DateTime.UtcNow,
                             data = models2
                         };
-
-                        return response;
                     }
                 }
                 else
                 {
-                    var models = Ldata.Select(r => new MPlanPeriodModels
+                    var models = Ldata.Select(r => new MPlanPeriodData
                     {
-                        Fullname = r.Fullname,
-                        Planid = r.Planid,
-                        PlanTypeId = r.PlanTypeId,
-                        Startdate = r.Startdate,
-                        Enddate = r.Enddate,
-                        Userid = r.Userid,
-                        Period = r.Period,
-                        Year = r.PlanYear,
+                        year = r.Year,
+                        planid = r.PlanId,
+                        planTypeid = r.PlanTypeId,
+                        effectivedate = r.EffectiveDate,
+                        enddate = r.EndDate,
+                        period = r.TPlanPeriodDetails?.Select(p => new MPlanPeriodDetail
+                        {
+                            periodId = p.PeriodId,
+                            effectiveDate = p.EffectiveDate,
+                            endDate = p.EndDate
+                        }).ToList() ?? new List<MPlanPeriodDetail>()
                     }).ToList();
 
-                    var response = new MPlanPeriodApirespone
+                    return new MPlanPeriodApirespone
                     {
-                        ResponseCode = "200",
-                        ResponseMsg = "OK",
+                        status = 200,
+                        message = "OK",
                         Timestamp = DateTime.UtcNow,
                         data = models
                     };
-
-                    return response;
                 }
             }
             catch (Exception ex)
@@ -244,10 +252,10 @@ namespace SME_API_KPI.Service
                 Console.WriteLine($"[ERROR] Failed to search MPlanPeriod: {ex.Message}");
                 return new MPlanPeriodApirespone
                 {
-                    ResponseCode = "500",
-                    ResponseMsg = "Internal Server Error",
+                    status = 500,
+                    message = "Internal Server Error",
                     Timestamp = DateTime.UtcNow,
-                    data = new List<MPlanPeriodModels>()
+                    data = new List<MPlanPeriodData>()
                 };
             }
         }

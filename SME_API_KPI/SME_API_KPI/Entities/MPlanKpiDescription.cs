@@ -7,9 +7,9 @@ public partial class MPlanKpiDescription
 {
     public int Id { get; set; }
 
-    public int Planid { get; set; }
+    public string Planid { get; set; } = null!;
 
-    public int Kpiid { get; set; }
+    public string Kpiid { get; set; } = null!;
 
     public string? Kpidescription { get; set; }
 }
