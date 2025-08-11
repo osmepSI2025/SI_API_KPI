@@ -7,7 +7,7 @@ public partial class TPlanKpilist
 {
     public int Id { get; set; }
 
-    public int PlanId { get; set; }
+    public string PlanId { get; set; }
 
     public int Kpiid { get; set; }
 

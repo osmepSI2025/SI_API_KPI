@@ -13,7 +13,7 @@ namespace SME_API_KPI.Models
 
     public class MPlanGetKpiData
     {
-        public int Planid { get; set; }
+        public string Planid { get; set; }
         public int Kpiid { get; set; }
         public List<MPlanGetKpiList> Kpilist { get; set; }
     }
@@ -34,7 +34,7 @@ namespace SME_API_KPI.Models
     }
     public class searchMPlanKpiModels
     {
-        public int Planid { get; set; }
+        public string Planid { get; set; }
 
         public int? dimensionid { get; set; }
 

@@ -82,7 +82,7 @@ public class JobSchedulerService : BackgroundService
             case "GetKPI":
                 var mkpi = new searchMPlanKpiModels
                 {
-                    Planid = 0,
+                    Planid = "",
                      dimensionid = 0
                 };
                 //await serviceProvider.GetRequiredService<MPlanKpiService>().BatchEndOfDay_MPlanKpi(mkpi);

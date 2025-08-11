@@ -5,7 +5,7 @@ namespace SME_API_KPI.Entities;
 
 public partial class MPlanKpi
 {
-    public int PlanId { get; set; }
+    public string PlanId { get; set; }
 
     public int Kpiid { get; set; }
 

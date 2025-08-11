@@ -25,7 +25,7 @@ namespace SME_API_KPI.Repository
             }
         }
 
-        public async Task<MPlanKpi?> GetByIdAsync(int? xplanId,int? xkpiid)
+        public async Task<MPlanKpi?> GetByIdAsync(string? xplanId,int? xkpiid)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace SME_API_KPI.Repository
                     //.ThenInclude(y => y.TPlanKpidivisions)
                     .AsQueryable();
 
-                if (searchModel.Planid != 0)
+                if (searchModel.Planid != "" && searchModel.Planid != null)
                 {
                     query = query.Where(bu => bu.PlanId == searchModel.Planid);
                 }
