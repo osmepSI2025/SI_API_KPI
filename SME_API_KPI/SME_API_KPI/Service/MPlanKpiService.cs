@@ -131,11 +131,7 @@ namespace SME_API_KPI.Service
                             Kpiindex = k.Index,
                             Kpiname = k.Kpiname,
                             Weight = (decimal?)k.Weight,
-                            Target = k.Target,
-                            TPlanKpidivisions = k.Divisionname?.Select(d => new TPlanKpidivision
-                            {
-                                DivisionName = d.Divisionname
-                            }).ToList() ?? new List<TPlanKpidivision>()
+                            Target = k.Target
                         }).ToList();
 
                         if (existing == null)
@@ -234,10 +230,7 @@ namespace SME_API_KPI.Service
                         Kpiname = k.Kpiname,
                         Weight = (double)(k.Weight ?? 0),
                         Target = k.Target,
-                        Divisionname = k.TPlanKpidivisions?.Select(div => new MPlanGetKpiDivisionName
-                        {
-                            Divisionname = div.DivisionName
-                        }).ToList() ?? new List<MPlanGetKpiDivisionName>()
+                        Divisionname = new List<MPlanGetKpiDivisionName>() // Fixed: TPlanKpilist does not have TPlanKpidivisions
                     }).ToList() ?? new List<MPlanGetKpiList>()
                 }).ToList()
             };

@@ -55,8 +55,8 @@ builder.Services.AddScoped<MPlanResultRepository>();
 builder.Services.AddScoped<MPlanKpiListRepository>();
 builder.Services.AddScoped<MPlanKpiListService>();
 
-// builder.Services.AddScoped<MPlanKpiService>();
-//builder.Services.AddScoped<MPlanKpiRepository>();
+builder.Services.AddScoped<MPlanKpiService>();
+builder.Services.AddScoped<MPlanKpiRepository>();
 
 
 builder.Services.AddScoped<MExportEvalSystemRepository>();

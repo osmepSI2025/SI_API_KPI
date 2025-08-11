@@ -15,8 +15,8 @@ namespace SME_API_KPI.Controllers
        
         private readonly MPlanResultService _mPlanResultService;
         private readonly MPlanKpiListService _mPlanKpiListService;
-    
-        //private readonly MPlanKpiService _mPlanKpiService;
+
+        private readonly MPlanKpiService _mPlanKpiService;
         // Uncomment if you need to use MPlanNameService
         //private readonly MPlanNameService _mPlanNameService;
 
@@ -24,11 +24,11 @@ namespace SME_API_KPI.Controllers
             MPlanPeriodService mPlanPeriodService,
             MPlanTargetDescriptionService mPlanTargetService,
             MPlanKpiDescriptionService mPlanKpiDescriptionService
- 
-          //, MPlanResultService mPlanResultService
+
+          , MPlanResultService mPlanResultService
             , MPlanKpiListService mPlanKpiListService
-    
-           // , MPlanKpiService mPlanKpiService
+
+            , MPlanKpiService mPlanKpiService
 
             )
         {
@@ -36,12 +36,12 @@ namespace SME_API_KPI.Controllers
               _mPlanPeriodService = mPlanPeriodService;
             _mPlanTargetDescriptionService = mPlanTargetService;
             _mPlanKpiDescriptionService = mPlanKpiDescriptionService;
-         
-         
-         //   _mPlanResultService = mPlanResultService;
+
+
+            _mPlanResultService = mPlanResultService;
             _mPlanKpiListService = mPlanKpiListService;
-          
-        //    _mPlanKpiService = mPlanKpiService;
+
+            _mPlanKpiService = mPlanKpiService;
         }
         [HttpPost("PlanSystem/Getlist")]
         public async Task<IActionResult> Getlist(searchMPlanKpiListModels models )
@@ -94,12 +94,12 @@ namespace SME_API_KPI.Controllers
 
 
 
-        //[HttpPost("PlanSystem/GetKPI")]
-        //public async Task<IActionResult> GetKPI(searchMPlanKpiModels models)
-        //{
-        //    var result = await _mPlanKpiService.GetAllAsyncSearch_MPlanKpi(models);
-        //    return Ok(result);
-        //}
+        [HttpPost("PlanSystem/GetKPI")]
+        public async Task<IActionResult> GetKPI(searchMPlanKpiModels models)
+        {
+            var result = await _mPlanKpiService.GetAllAsyncSearch_MPlanKpi(models);
+            return Ok(result);
+        }
         //[HttpGet("PlanSystem/batch-GetKPI")]
         //public async Task<IActionResult> BatchEndOfDay_GetKPI(int planid, int dimensionid)
         //{
@@ -114,7 +114,7 @@ namespace SME_API_KPI.Controllers
         //    return Ok();
         //}
 
-       
+
 
 
         [HttpGet("PlanSystem/gettargetdescription")]

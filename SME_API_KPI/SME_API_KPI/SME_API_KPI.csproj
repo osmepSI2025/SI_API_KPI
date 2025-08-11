@@ -17,7 +17,6 @@
     <Compile Remove="Repository\MPlanPeriodRepository.cs" />
     <Compile Remove="Repository\MPlanweightRepository.cs" />
     <Compile Remove="Service\MPlanKpiAssignService.cs" />
-    <Compile Remove="Service\MPlanKpiService.cs" />
     <Compile Remove="Service\MPlanKpiTargetService.cs" />
     <Compile Remove="Service\MPlanNameService.cs" />
     <Compile Remove="Service\MPlanPeriodService.cs" />
